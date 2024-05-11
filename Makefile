@@ -9,6 +9,7 @@ LDFLAGS += -static
 LDLIBS += -lrt -lpthread
 #LDLIBS += -lm
 
+<<<<<<< HEAD
 SOURCES = main.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c
 SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = main
@@ -19,6 +20,17 @@ $(warning The target IP address is not set)
 $(warning Run as "TARGET_IP=192.168.202.143 make run" or modify Makefile)
 # IP ADRESA
 TARGET_IP ?= 192.168.202.119
+=======
+SOURCES = main.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c ball.c racket.c led.c
+SOURCES += font_prop14x16.c font_rom8x16.c
+TARGET_EXE = main
+TARGET_IP ?= 192.168.223.106
+ifeq ($(TARGET_IP),)
+ifneq ($(filter debug run,$(MAKECMDGOALS)),)
+$(warning The target IP address is not set)
+$(warning Run as "TARGET_IP=192.168.202.xxx make run" or modify Makefile)
+TARGET_IP ?= 192.168.223.106
+>>>>>>> dev
 endif
 endif
 TARGET_DIR ?= /tmp/$(shell whoami)
