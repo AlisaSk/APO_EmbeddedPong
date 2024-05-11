@@ -30,6 +30,7 @@
 #include "ball.h"
 #include "racket.h"
 #include "led.h"
+#include "knobs.h"
 
 #define WIDTH 480
 #define HEIGHT 320
@@ -100,7 +101,13 @@ int main(int argc, char *argv[]) {
 
   Ball new_ball;
   initBall(&new_ball);
-  printf("new ball w - %d\n", new_ball.w);
+
+  initKnobs();
+  KnobsData kd = getKnobsValue();
+  uint8_t kr = kd.redKnob;
+  uint8_t kg = kd.greenKnob;
+  draw_pixel_big(kr, kg, 0x07f4);
+
   drawBall(&new_ball, 0xe9dd);
   for (ptr = 0; ptr < 480*320 ; ptr++) {
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
@@ -111,6 +118,16 @@ int main(int argc, char *argv[]) {
     for (ptr = 0; ptr < 480*320 ; ptr++) {
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
     }
+
+    
+    KnobsData kd = getKnobsValue();
+    uint8_t krn = kd.redKnob;
+    uint8_t kgn = kd.greenKnob;
+    draw_pixel_big(kr, kg, 0x0841);
+    draw_pixel_big(krn, kgn, 0x07f4);
+    printf("red %d green %d \n", krn, kgn);
+    kr = krn;
+    kg = kgn;
   }
  
 
@@ -131,5 +148,12 @@ int main(int argc, char *argv[]) {
 
 
 
-
+void draw_pixel_big(int x, int y, unsigned short color) {
+  int i,j;
+  for (i=0; i<20; i++) {
+    for (j=0; j<20; j++) {
+      draw_pixel(x+i, y+j, color);
+    }
+  }
+}
 

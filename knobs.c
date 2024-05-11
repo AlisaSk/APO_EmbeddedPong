@@ -5,7 +5,7 @@
 static KnobsData *lastKnobsData;
 
 
-bool knobsInit() {
+bool initKnobs() {
     mem_base = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
     if (mem_base == NULL) {
         fprintf(stderr, "ERROR_KNOBS: Memory allocation failed\n");
@@ -24,15 +24,14 @@ bool knobsInit() {
     return true;
 }
 
-
 KnobsData getKnobsValue() {
     int32_t rgbKnobsValue = *(volatile uint32_t *)(mem_base + SPILED_REG_KNOBS_8BIT_o);
 
     KnobsData ret = {
-        .redKnob = (rgbKnobsValue >> 16) & 0xFF,  // red knob position
-        .greenKnob = (rgbKnobsValue >> 8) & 0xFF,   // green knob position
-        .blueKnob = (rgbKnobsValue >> 0) & 0xFF,   // blue knob position
-        .redButton = (rgbKnobsValue >> 26) & 1,     // red button
+        .redKnob = (rgbKnobsValue >> 16) & 0xFF,  
+        .greenKnob = (rgbKnobsValue >> 8) & 0xFF,   
+        .blueKnob = (rgbKnobsValue >> 0) & 0xFF,   
+        .redButton = (rgbKnobsValue >> 26) & 1,     
         .greenButton = (rgbKnobsValue >> 25) & 1,  
         .blueButton = (rgbKnobsValue >> 24) & 1    
     };
