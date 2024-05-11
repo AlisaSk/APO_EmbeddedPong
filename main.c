@@ -98,8 +98,8 @@ int main(int argc, char *argv[]) {
   for (ptr = 0; ptr < 480*320 ; ptr++) {
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
   }
-  while (1) {
-    moveBall(&new_ball, rackets);
+  while (moveBall(&new_ball, rackets)) {
+    
     drawBall(&new_ball, 0xe9dd);
 
 
