@@ -15,17 +15,23 @@ void initBall(Ball* ball) {
    
 }
 
-void moveBall(Ball* ball, Racket* rackets) {
+bool moveBall(Ball* ball, Racket* rackets) {
     drawBall(ball, 0x0000);
     int new_x = ball->x + ball->dx;
     int new_y = ball->y + ball->dy;
+    
     // bool isValidX = new_x >= 0 && new_x < WIDTH - ball->w;
     bool isValidX = !checkCollision(&rackets[0], ball, 1) && !checkCollision(&rackets[1], ball, 2);
     bool isValidY = new_y >= 0 && new_y < HEIGHT - ball->h;
 
+
     if (!isValidX) {
         ball->dx *= -1;
         new_x = ball->x + ball->dx;
+    }
+
+    if (new_x <= 0 + ball->w || new_x >= WIDTH - ball->w) {
+      return false;
     }
 
     if (!isValidY) {
@@ -35,6 +41,7 @@ void moveBall(Ball* ball, Racket* rackets) {
 
     ball->x = new_x;
     ball->y = new_y;
+    return true;
 }
 
 void drawBall (Ball* ball, unsigned short color) {
