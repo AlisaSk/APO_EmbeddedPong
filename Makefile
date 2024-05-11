@@ -9,7 +9,7 @@ LDFLAGS += -static
 LDLIBS += -lrt -lpthread
 #LDLIBS += -lm
 
-SOURCES = main.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c ball.c racket.c led.c
+SOURCES = main.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c ball.c racket.c led.c knobs.c
 SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = main
 TARGET_IP ?= 192.168.223.106
