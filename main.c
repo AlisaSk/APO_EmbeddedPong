@@ -134,14 +134,6 @@ int main(int argc, char *argv[]) {
     }
 
     
-    KnobsData kd = getKnobsValue();
-    uint8_t krn = kd.redKnob;
-    uint8_t kgn = kd.greenKnob;
-    draw_pixel_big(kr, kg, 0x0841);
-    draw_pixel_big(krn, kgn, 0x07f4);
-    printf("red %d green %d \n", krn, kgn);
-    kr = krn;
-    kg = kgn;
   }
  
 
