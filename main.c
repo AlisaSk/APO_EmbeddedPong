@@ -1,18 +1,3 @@
-/*******************************************************************
-  Project main function template for MicroZed based MZ_APO board
-  designed by Petr Porazil at PiKRON
- 
-  change_me.c      - main file
- 
-  include your name there and license for distribution.
- 
-  Remove next text: This line should not appear in submitted
-  work and project name should be change to match real application.
-  If this text is there I want 10 points subtracted from final
-  evaluation.
- 
- *******************************************************************/
- 
 #define _POSIX_C_SOURCE 200112L
  
 #include <stdlib.h>
@@ -96,8 +81,8 @@ int main(int argc, char *argv[]) {
   
   initRacket(&rackets[0], 1);
   initRacket(&rackets[1], 2);
-  drawRacket(&rackets[0]);
-  drawRacket(&rackets[1]);
+  drawRacket(&rackets[0], 0xffff);
+  drawRacket(&rackets[1], 0xffff);
 
   Ball new_ball;
   initBall(&new_ball);
@@ -106,15 +91,44 @@ int main(int argc, char *argv[]) {
   KnobsData kd = getKnobsValue();
   uint8_t kr = kd.redKnob;
   uint8_t kg = kd.greenKnob;
-  draw_pixel_big(kr, kg, 0x07f4);
+  uint8_t kb = kd.blueKnob;
 
   drawBall(&new_ball, 0xe9dd);
+
   for (ptr = 0; ptr < 480*320 ; ptr++) {
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
   }
   while (1) {
     moveBall(&new_ball, rackets);
     drawBall(&new_ball, 0xe9dd);
+
+
+    KnobsData nkd = getKnobsValue();
+    uint8_t krn = nkd.redKnob;
+    uint8_t kgn = nkd.greenKnob;
+    uint8_t kbn = nkd.blueKnob;
+    if (krn > kr) {
+      moveRacket(&rackets[0], 10);
+      drawRacket(&rackets[0], 0xffff);
+    }
+    else if (krn < kr) {
+      moveRacket(&rackets[0], -10);
+      drawRacket(&rackets[0], 0xffff);
+    }
+    if (kbn > kb) {
+      moveRacket(&rackets[1], 10);
+      drawRacket(&rackets[1], 0xffff);
+    }
+    else if (kbn < kb) {
+      moveRacket(&rackets[1], -10);
+      drawRacket(&rackets[1], 0xffff);
+    }
+
+
+    kr = krn;
+    kg = kgn;
+    kb = kbn;
+
     for (ptr = 0; ptr < 480*320 ; ptr++) {
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
     }
@@ -156,4 +170,3 @@ void draw_pixel_big(int x, int y, unsigned short color) {
     }
   }
 }
-
