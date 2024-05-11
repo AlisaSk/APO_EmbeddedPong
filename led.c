@@ -30,7 +30,7 @@ void ledLineLightUp() {
     for (int i=0; i<30; i++) {
         *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_LINE_o) = val_line;
         val_line<<=1;
-        printf("LED val 0x%x\n", val_line);
+        // printf("LED val 0x%x\n", val_line);
         clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
     }
     ledLineClean();

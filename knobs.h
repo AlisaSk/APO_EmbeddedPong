@@ -1,23 +1,26 @@
 #ifndef KNOBS_H
 #define KNOBS_H
 
-#include "headers.h"
+#include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
 
 
 typedef struct {
-    int8_t rk, gk, bk, rb, gb, bb;
-} knobs_data;
+    uint8_t redKnob;
+    uint8_t greenKnob;
+    uint8_t blueKnob;
+    bool redButton;
+    bool greenButton;
+    bool blueButton;
+} KnobsData;
 
-/* returns actual knobs position */
-knobs_data knobs_value();
+static unsigned char *mem_base;
 
-/* 
- * sets the knobs memory base adress
- * find the actual knobs position for future relative computations
- */
-bool knobs_init();
+bool initKnobs();
 
-/* returns the relative position to the position found in the last call of this function */
-knobs_data get_rel_knob_value();
+KnobsData getKnobsValue();
+
 
 #endif
