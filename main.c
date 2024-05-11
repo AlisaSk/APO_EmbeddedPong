@@ -16,6 +16,7 @@
 #include "racket.h"
 #include "led.h"
 #include "knobs.h"
+#include "menu.h"
 
 #define WIDTH 480
 #define HEIGHT 320
@@ -23,7 +24,7 @@
 #include "font_types.h"
  
 unsigned short *fb;
-
+unsigned char *parlcd_mem_base;
 
 
 void draw_pixel(int x, int y, unsigned short color) {
@@ -51,8 +52,7 @@ int char_width(font_descriptor_t* fdes, int ch) {
 Racket rackets[2];
  
 int main(int argc, char *argv[]) {
-  unsigned char *parlcd_mem_base;
-  int i,j,k;
+  
   int ptr;
   unsigned int c;
   fb  = (unsigned short *)malloc(320*480*2);
@@ -72,8 +72,11 @@ int main(int argc, char *argv[]) {
     exit(1);
  
   parlcd_hx8357_init(parlcd_mem_base);
-
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
+
+  startMenu(fb, parlcd_mem_base);
+
+  
   for (ptr = 0; ptr < 480*320 ; ptr++) {
       fb[ptr] = 0;
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
@@ -134,14 +137,6 @@ int main(int argc, char *argv[]) {
     }
 
     
-    KnobsData kd = getKnobsValue();
-    uint8_t krn = kd.redKnob;
-    uint8_t kgn = kd.greenKnob;
-    draw_pixel_big(kr, kg, 0x0841);
-    draw_pixel_big(krn, kgn, 0x07f4);
-    printf("red %d green %d \n", krn, kgn);
-    kr = krn;
-    kg = kgn;
   }
  
 

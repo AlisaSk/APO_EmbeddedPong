@@ -56,7 +56,7 @@ void drawBall (Ball* ball, unsigned short color) {
   }
 }
 
-bool checkCollision( Racket* rocket, Ball* ball, int rocketNumber) {
+bool checkCollision(Racket* rocket, Ball* ball, int rocketNumber) {
     // Calculate the sides of the rectangle
     int rocketLeft = rocket->x;
     int rocketRight = rocket->x + rocket->w;
