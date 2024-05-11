@@ -132,6 +132,16 @@ int main(int argc, char *argv[]) {
     for (ptr = 0; ptr < 480*320 ; ptr++) {
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
     }
+
+    
+    KnobsData kd = getKnobsValue();
+    uint8_t krn = kd.redKnob;
+    uint8_t kgn = kd.greenKnob;
+    draw_pixel_big(kr, kg, 0x0841);
+    draw_pixel_big(krn, kgn, 0x07f4);
+    printf("red %d green %d \n", krn, kgn);
+    kr = krn;
+    kg = kgn;
   }
  
 
