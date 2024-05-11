@@ -16,8 +16,13 @@
 #include "led.h"
 #include "knobs.h"
 #include <stdbool.h>
+#include <time.h>
 
 
-void startMenu(unsigned short *fb, unsigned char *parlcd_mem_base);
+void startMenu(unsigned char *parlcd_mem_base);
+
+void drawRectangle(unsigned short color1, unsigned short color2);
+
+void draw_pixel_big(int x, int y, unsigned short color);
 
 #endif

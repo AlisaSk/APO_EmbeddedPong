@@ -16,7 +16,7 @@
 #include "racket.h"
 #include "led.h"
 #include "knobs.h"
-#include "menu.h"
+#include "start.h"
 
 #define WIDTH 480
 #define HEIGHT 320
@@ -26,14 +26,12 @@
 unsigned short *fb;
 unsigned char *parlcd_mem_base;
 
-
+void draw_char(int x, int y, font_descriptor_t* fdes, char ch) {
+}
 void draw_pixel(int x, int y, unsigned short color) {
   if (x>=0 && x<480 && y>=0 && y<320) {
     fb[x+480*y] = color;
   }
-}
- 
-void draw_char(int x, int y, font_descriptor_t* fdes, char ch) {
 }
  
 int char_width(font_descriptor_t* fdes, int ch) {
@@ -57,7 +55,7 @@ int main(int argc, char *argv[]) {
   unsigned int c;
   fb  = (unsigned short *)malloc(320*480*2);
  
-  printf("Hello world\n");
+  printf("Hello world!!!!\n");
  
   sleep(1);
   /*
@@ -74,7 +72,7 @@ int main(int argc, char *argv[]) {
   parlcd_hx8357_init(parlcd_mem_base);
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
 
-  startMenu(fb, parlcd_mem_base);
+  startMenu( parlcd_mem_base);
 
   
   for (ptr = 0; ptr < 480*320 ; ptr++) {
@@ -156,12 +154,3 @@ int main(int argc, char *argv[]) {
 
 
 
-
-void draw_pixel_big(int x, int y, unsigned short color) {
-  int i,j;
-  for (i=0; i<20; i++) {
-    for (j=0; j<20; j++) {
-      draw_pixel(x+i, y+j, color);
-    }
-  }
-}
