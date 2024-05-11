@@ -8,6 +8,7 @@ typedef struct Racket {
 } Racket;
  
 void initRacket(Racket* racket, int number);
-void drawRacket(Racket* racket);
+void drawRacket(Racket* racket, unsigned short color);
+void moveRacket (Racket* racket, int number);
 
 #endif
