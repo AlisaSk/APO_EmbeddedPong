@@ -17,35 +17,73 @@
 #include "racket.h"
 #include "led.h"
 #include "knobs.h"
+<<<<<<< HEAD
 #include "menu.h"
+=======
+#include "start.h"
+>>>>>>> dev
 
 #define WIDTH 480
 #define HEIGHT 320
  
 #include "font_types.h"
  
+<<<<<<< HEAD
 static unsigned short *fb;
 static font_descriptor_t* fdes = &font_winFreeSystem14x16;
 static int scale = 4;
 
 
 void draw_pixel_main(int x, int y, unsigned short color) {
+=======
+unsigned short *fb;
+unsigned char *parlcd_mem_base;
+
+void draw_char(int x, int y, font_descriptor_t* fdes, char ch) {
+}
+void draw_pixel(int x, int y, unsigned short color) {
+>>>>>>> dev
   if (x>=0 && x<480 && y>=0 && y<320) {
     fb[x+480*y] = color;
   }
 }
+<<<<<<< HEAD
+=======
+ 
+int char_width(font_descriptor_t* fdes, int ch) {
+  int width = 0;
+  if ((ch >= fdes->firstchar) && (ch-fdes->firstchar < fdes->size)) {
+    ch -= fdes->firstchar;
+    if (!fdes->width) {
+      width = fdes->maxwidth;
+    } else {
+      width = fdes->width[ch];
+    }
+  }
+  return width;
+}
+>>>>>>> dev
 
 
 static Racket rackets[2];
 
  
 int main(int argc, char *argv[]) {
+<<<<<<< HEAD
   unsigned char *parlcd_mem_base;
   int ptr;
   unsigned short* fb  = (unsigned short *)malloc(320*480*2);
   int roundCount = 1;
   printf("Hello world\n");
   font_descriptor_t* fdes = &font_winFreeSystem14x16;
+=======
+  
+  int ptr;
+  unsigned int c;
+  fb  = (unsigned short *)malloc(320*480*2);
+ 
+  printf("Hello world!!!!\n");
+>>>>>>> dev
  
   sleep(1);
   /*
@@ -53,6 +91,10 @@ int main(int argc, char *argv[]) {
    * registers region of RGB LEDs, knobs and line of yellow LEDs.
    */
 
+<<<<<<< HEAD
+=======
+  
+>>>>>>> dev
   ledInit();
   ledLineLightUp();
   parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
@@ -61,8 +103,11 @@ int main(int argc, char *argv[]) {
     exit(1);
  
   parlcd_hx8357_init(parlcd_mem_base);
-
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
+
+  startMenu( parlcd_mem_base);
+
+  
   for (ptr = 0; ptr < 480*320 ; ptr++) {
       fb[ptr] = 0;
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
