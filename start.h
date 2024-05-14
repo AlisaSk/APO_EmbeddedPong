@@ -1,6 +1,6 @@
 
-#ifndef MENU_H
-#define MENU_H
+#ifndef START_H
+#define START_H
 
 
 #include <stdlib.h>
