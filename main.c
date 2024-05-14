@@ -19,6 +19,7 @@
 #include "menu.h"
 #include "start.h"
 #include "painter.h"
+#include "botmenu.h"
 
 #define WIDTH 480
 #define HEIGHT 320
@@ -39,6 +40,8 @@ int main(int argc, char *argv[]) {
   unsigned int c;
   fb  = (unsigned short *)malloc(320*480*2);
   int roundCount = 1;
+  int botMainSpeed = 6;
+  int botSpeed;
  
   printf("Hello world!!!!\n");
  
@@ -53,76 +56,86 @@ int main(int argc, char *argv[]) {
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
 
   startPage();
+  
   int mode = startMenu();
+
+  if (mode == 1) {
+    unsigned int ms_count = 0;
+    clock_t start_time = clock();
+    while (ms_count < 500) {
+        ms_count = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
+    }
+    int diff = startBotMenu();
+    botSpeed = diff * botMainSpeed;
+  }
+
+  
 
   
   drawBackground(0x0000);
   
-  if (mode == 2) {
-    while (roundCount != 4) {
-      drawBackground(0x0000);
-      initRacket(&rackets[0], 1);
-      initRacket(&rackets[1], 2);
-      drawRacket(&rackets[0], 0xffff);
-      drawRacket(&rackets[1], 0xffff);
+  
+  while (roundCount != 4) {
+    drawBackground(0x0000);
+    initRacket(&rackets[0], 1);
+    initRacket(&rackets[1], 2);
+    drawRacket(&rackets[0], 0xffff);
+    drawRacket(&rackets[1], 0xffff);
 
-      Ball new_ball;
-      initBall(&new_ball);
+    Ball new_ball;
+    initBall(&new_ball);
+    drawBall(&new_ball, 0xe9dd);
+
+    initKnobs();
+    KnobsData kd = getKnobsValue();
+    uint8_t kr = kd.redKnob;
+    int counter = 0;
+    renderLCD();
+    while (moveBall(&new_ball, rackets)) {
+      
       drawBall(&new_ball, 0xe9dd);
 
-      initKnobs();
-      KnobsData kd = getKnobsValue();
-      uint8_t kr = kd.redKnob;
-      uint8_t kg = kd.greenKnob;
-      uint8_t kb = kd.blueKnob;
+
+      KnobsData nkd = getKnobsValue();
+      uint8_t krn = nkd.redKnob;
+      if (krn > kr) {
+        moveRacket(&rackets[0], 10);
+        drawRacket(&rackets[0], 0xffff);
+      }
+      else if (krn < kr) {
+        moveRacket(&rackets[0], -10);
+        drawRacket(&rackets[0], 0xffff);
+      }
+
+      
+      if (moveRacket(&rackets[1], botSpeed)) {
+        drawRacket(&rackets[1], 0xffff);
+      }
+      else {
+        drawRacket(&rackets[1], 0xffff);
+        botSpeed *= -1;
+      }
+
+      
+
+
+
+
+      kr = krn;
 
       renderLCD();
-      while (moveBall(&new_ball, rackets)) {
-        
-        drawBall(&new_ball, 0xe9dd);
-
-
-        KnobsData nkd = getKnobsValue();
-        uint8_t krn = nkd.redKnob;
-        uint8_t kgn = nkd.greenKnob;
-        uint8_t kbn = nkd.blueKnob;
-        if (krn > kr) {
-          moveRacket(&rackets[0], 10);
-          drawRacket(&rackets[0], 0xffff);
-        }
-        else if (krn < kr) {
-          moveRacket(&rackets[0], -10);
-          drawRacket(&rackets[0], 0xffff);
-        }
-        if (kbn > kb) {
-          moveRacket(&rackets[1], 10);
-          drawRacket(&rackets[1], 0xffff);
-        }
-        else if (kbn < kb) {
-          moveRacket(&rackets[1], -10);
-          drawRacket(&rackets[1], 0xffff);
-        }
-
-
-        kr = krn;
-        kg = kgn;
-        kb = kbn;
-
-        renderLCD();
-
-        
-      }
-      roundCount++;
+      counter++;
+      
     }
+    roundCount++;
   }
-  else {
-      drawBackground(0xf012);
-    }
+  
+
   
  
 
 
-  renderLCD();
+  // renderLCD();
  
   char str[]="Goodbye world";
   char *ch=str;
