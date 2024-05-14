@@ -19,7 +19,7 @@
 #include <time.h>
 
 
-void startPage(unsigned char *parlcd_mem_base);
+void startPage();
 
 void drawRectangle(unsigned short color1, unsigned short color2);
 
