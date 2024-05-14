@@ -75,13 +75,11 @@ void startPage( unsigned char *parlcd_mem_base) {
         gb = kd.greenButton;
         bb = kd.blueButton;
 
-        // if (rb || gb || bb) {
-        //     break;
-        // }
+        
 
         unsigned int ms_count = 0;
         clock_t start_time = clock();
-        while (ms_count < 150) {
+        while (ms_count < 190) {
             ms_count = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
         }
         
