@@ -55,9 +55,9 @@ int main(int argc, char *argv[]) {
    * registers region of RGB LEDs, knobs and line of yellow LEDs.
    */
 
-  
+
   ledInit();
-  ledLineLightUp();
+  // ledLineLightUp();
   parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
  
   if (parlcd_mem_base == NULL)
@@ -66,9 +66,13 @@ int main(int argc, char *argv[]) {
   parlcd_hx8357_init(parlcd_mem_base);
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
 
+<<<<<<< HEAD
+  startPage( parlcd_mem_base);
+=======
   startPage(parlcd_mem_base);
 
   int mode = startMenu( parlcd_mem_base);
+>>>>>>> dev
 
   
   for (ptr = 0; ptr < 480*320 ; ptr++) {

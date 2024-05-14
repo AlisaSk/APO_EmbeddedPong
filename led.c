@@ -30,7 +30,8 @@ void ledRGBClean () {
 }
 
 void colorLedRGB (unsigned short color1, unsigned short color2) {
-
+    *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_RGB1_o) = color1;
+    *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_RGB2_o) = color2;
 }
 
 void ledLineLightUp() {
@@ -48,28 +49,25 @@ void ledLineLightUp() {
         clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay2, NULL);
     }
     ledLineClean();
+    ledRGBClean();
 }
 
 
-void ledStart() {
-    struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
+void ledStartPage(int milisec) {
+    struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = milisec * 1000 * 1000}; // 20 milliseconds
     uint32_t val_line = 10;
     for (int i=0; i<30; i++) {
         *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_LINE_o) = val_line;
-        *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_RGB1_o) = 0x00FF0000;
-        *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_RGB2_o) = 0xffff;
-    
+        colorLedRGB (0x00FF00, 0x00FF);
         val_line<<=1;
-        // printf("LED val 0x%x\n", val_line);
         clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
         ledRGBClean();
     }
     for (int i=0; i<30; i++) {
+        colorLedRGB (0x00FF, 0x00FF00);
         *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_LINE_o) = val_line;
         val_line>>=1;
-        // printf("LED val 0x%x\n", val_line);
         clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
-        *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_RGB2_o) = 0x0000;
         ledRGBClean();
     }
     ledLineClean();
