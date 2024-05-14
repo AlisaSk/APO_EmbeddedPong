@@ -19,7 +19,7 @@ int startMenu(unsigned char* parlcd_mem_base) {
         menuBuffer[ptr] = 0;
         parlcd_write_data(parlcd_mem_base, menuBuffer[ptr]);
     }
-  draw_word(120, 30, "MENU", 50, 0x90f6);
+  draw_word(140, 30, "MENU", 50, 0x90f6);
   draw_word(115, 120, "1 pLayer", 30, 0xfe80);
   draw_word(115, 200, "2 pLayers", 30, 0xfe80);
 

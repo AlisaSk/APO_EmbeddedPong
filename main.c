@@ -26,6 +26,8 @@
  
 unsigned short *fb;
 unsigned char *parlcd_mem_base;
+int player1Score = 0;
+int player2Score = 0;
 
 
 void draw_pixel(int x, int y, unsigned short color) {
@@ -74,71 +76,76 @@ int main(int argc, char *argv[]) {
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
   }
   
+  if (mode == 2) {
+    while (roundCount != 4) {
+      for (ptr = 0; ptr < 480*320 ; ptr++) {
+          fb[ptr] = 0;
+          parlcd_write_data(parlcd_mem_base, fb[ptr]);
+      }
+      initRacket(&rackets[0], 1);
+      initRacket(&rackets[1], 2);
+      drawRacket(&rackets[0], 0xffff);
+      drawRacket(&rackets[1], 0xffff);
 
-  while (roundCount != 4) {
-    for (ptr = 0; ptr < 480*320 ; ptr++) {
-        fb[ptr] = 0;
-        parlcd_write_data(parlcd_mem_base, fb[ptr]);
-    }
-    initRacket(&rackets[0], 1);
-    initRacket(&rackets[1], 2);
-    drawRacket(&rackets[0], 0xffff);
-    drawRacket(&rackets[1], 0xffff);
-
-    Ball new_ball;
-    initBall(&new_ball);
-
-    initKnobs();
-    KnobsData kd = getKnobsValue();
-    uint8_t kr = kd.redKnob;
-    uint8_t kg = kd.greenKnob;
-    uint8_t kb = kd.blueKnob;
-
-    drawBall(&new_ball, 0xe9dd);
-
-    for (ptr = 0; ptr < 480*320 ; ptr++) {
-        parlcd_write_data(parlcd_mem_base, fb[ptr]);
-    }
-    while (moveBall(&new_ball, rackets)) {
-      
+      Ball new_ball;
+      initBall(&new_ball);
       drawBall(&new_ball, 0xe9dd);
 
-
-      KnobsData nkd = getKnobsValue();
-      uint8_t krn = nkd.redKnob;
-      uint8_t kgn = nkd.greenKnob;
-      uint8_t kbn = nkd.blueKnob;
-      if (krn > kr) {
-        moveRacket(&rackets[0], 10);
-        drawRacket(&rackets[0], 0xffff);
-      }
-      else if (krn < kr) {
-        moveRacket(&rackets[0], -10);
-        drawRacket(&rackets[0], 0xffff);
-      }
-      if (kbn > kb) {
-        moveRacket(&rackets[1], 10);
-        drawRacket(&rackets[1], 0xffff);
-      }
-      else if (kbn < kb) {
-        moveRacket(&rackets[1], -10);
-        drawRacket(&rackets[1], 0xffff);
-      }
-
-
-      kr = krn;
-      kg = kgn;
-      kb = kbn;
+      initKnobs();
+      KnobsData kd = getKnobsValue();
+      uint8_t kr = kd.redKnob;
+      uint8_t kg = kd.greenKnob;
+      uint8_t kb = kd.blueKnob;
 
       for (ptr = 0; ptr < 480*320 ; ptr++) {
-        parlcd_write_data(parlcd_mem_base, fb[ptr]);
+          parlcd_write_data(parlcd_mem_base, fb[ptr]);
       }
+      while (moveBall(&new_ball, rackets)) {
+        
+        drawBall(&new_ball, 0xe9dd);
 
-      
+
+        KnobsData nkd = getKnobsValue();
+        uint8_t krn = nkd.redKnob;
+        uint8_t kgn = nkd.greenKnob;
+        uint8_t kbn = nkd.blueKnob;
+        if (krn > kr) {
+          moveRacket(&rackets[0], 10);
+          drawRacket(&rackets[0], 0xffff);
+        }
+        else if (krn < kr) {
+          moveRacket(&rackets[0], -10);
+          drawRacket(&rackets[0], 0xffff);
+        }
+        if (kbn > kb) {
+          moveRacket(&rackets[1], 10);
+          drawRacket(&rackets[1], 0xffff);
+        }
+        else if (kbn < kb) {
+          moveRacket(&rackets[1], -10);
+          drawRacket(&rackets[1], 0xffff);
+        }
+
+
+        kr = krn;
+        kg = kgn;
+        kb = kbn;
+
+        for (ptr = 0; ptr < 480*320 ; ptr++) {
+          parlcd_write_data(parlcd_mem_base, fb[ptr]);
+        }
+
+        
+      }
+      roundCount++;
     }
-    roundCount++;
   }
-
+  else {
+      for (ptr = 0; ptr < 480*320 ; ptr++) {
+      fb[ptr] = 0x07ff;
+      parlcd_write_data(parlcd_mem_base, fb[ptr]);
+    }
+  }
  
 
 
