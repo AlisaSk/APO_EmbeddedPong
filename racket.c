@@ -20,7 +20,7 @@ void drawRacket(Racket* racket, unsigned short color) {
   int h = racket->h;
   for (int x1 = x; x1 < w + x; x1 ++) {
     for (int y1 = y; y1 < y + h; y1++) {
-      draw_pixel(x1, y1, color);
+      draw_pixel_main(x1, y1, color);
     }
   }
 }
