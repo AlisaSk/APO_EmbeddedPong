@@ -5,6 +5,8 @@
 #define WIDTH 480
 #define HEIGHT 320
 
+
+
 void initRacket(Racket* racket, int number) {
     racket->x = number == 1 ? 50 : WIDTH - 50;
     racket->y = HEIGHT / 2;
@@ -32,3 +34,5 @@ void moveRacket (Racket* racket, int number) {
     racket->y =  y1;
   }
 }
+
+
