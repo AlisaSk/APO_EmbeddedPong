@@ -6,5 +6,6 @@
 bool ledInit();
 void ledLineClean();
 void ledLineLightUp();
+void ledStartPage(int milisec);
 
 #endif

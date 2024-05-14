@@ -55,9 +55,9 @@ int main(int argc, char *argv[]) {
    * registers region of RGB LEDs, knobs and line of yellow LEDs.
    */
 
-  
+
   ledInit();
-  ledLineLightUp();
+  // ledLineLightUp();
   parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
  
   if (parlcd_mem_base == NULL)
