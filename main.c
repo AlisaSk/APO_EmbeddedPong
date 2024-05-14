@@ -60,6 +60,7 @@ int main(int argc, char *argv[]) {
   
   if (mode == 2) {
     while (roundCount != 4) {
+      drawBackground(0x0000);
       initRacket(&rackets[0], 1);
       initRacket(&rackets[1], 2);
       drawRacket(&rackets[0], 0xffff);
