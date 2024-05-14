@@ -1,6 +1,6 @@
 
-#ifndef MENU_H
-#define MENU_H
+#ifndef START_H
+#define START_H
 
 
 #include <stdlib.h>
@@ -23,6 +23,5 @@ void startPage(unsigned char *parlcd_mem_base);
 
 void drawRectangle(unsigned short color1, unsigned short color2);
 
-void draw_word_start(int x, int y, char* word, int offset,  unsigned short color, int scale);
 
 #endif

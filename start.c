@@ -98,7 +98,6 @@ void startPage( unsigned char *parlcd_mem_base) {
 
 
 
-
 void drawRectangle(unsigned short color1, unsigned short color2) {
     int xEdgeSpacing = 80;
     int yEdgeSpacing = 30;
