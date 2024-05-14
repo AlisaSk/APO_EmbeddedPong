@@ -62,6 +62,8 @@ int main(int argc, char *argv[]) {
    * Setup memory mapping which provides access to the peripheral
    * registers region of RGB LEDs, knobs and line of yellow LEDs.
    */
+
+  
   ledInit();
   ledLineLightUp();
   parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
@@ -100,7 +102,8 @@ int main(int argc, char *argv[]) {
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
   }
   while (moveBall(&new_ball, rackets)) {
-    
+    drawRacket(&rackets[1], 0xffff);
+    drawRacket(&rackets[0], 0xffff);
     drawBall(&new_ball, 0xe9dd);
 
 

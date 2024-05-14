@@ -35,15 +35,13 @@ void startMenu( unsigned char *parlcd_mem_base) {
     unsigned short color1 = 0xb15f;
     unsigned short color2 = 0x0000;
     drawRectangle(color1, color2);
-    // for (ptr = 0; ptr < 480*320 ; ptr++) {
-    //   parlcd_write_data(parlcd_mem_base, b[ptr]);
-    // }
+    kd = getKnobsValue();
+    rb = kd.redButton;
+    gb = kd.greenButton;
+    bb = kd.blueButton;
 
     while (!rb && !gb && !bb) {
-        kd = getKnobsValue();
-        rb = kd.redButton;
-        gb = kd.greenButton;
-        bb = kd.blueButton;
+        
         drawRectangle(color1, color2);
         for (ptr = 0; ptr < 480*320 ; ptr++) {
             parlcd_write_data(parlcd_mem_base, b[ptr]);
@@ -51,21 +49,24 @@ void startMenu( unsigned char *parlcd_mem_base) {
         unsigned short colorTemp = color1;
         color1 = color2;
         color2 = colorTemp;
+
+        kd = getKnobsValue();
+        rb = kd.redButton;
+        gb = kd.greenButton;
+        bb = kd.blueButton;
+
         unsigned int ms_count = 0;
         clock_t start_time = clock();
-
-        while (ms_count < 300) {
-            // Do nothing, just keep looping until desired time has elapsed
+        while (ms_count < 250) {
             ms_count = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
         }
     }
     
 
-    
-    
-
-    printf("Goodbye menu\n");
+    printf("Goodbye start\n");
 }
+
+
 
 
 void draw_pixel_big(int x, int y, unsigned short color) {
@@ -82,16 +83,16 @@ void drawRectangle(unsigned short color1, unsigned short color2) {
     int yEdgeSpacing = 30;
 
     int recWidth = 320;
-    int recHeight = 260;
+    int recHeight = 200;
 
     int colorSwitcher = -1;
 
     int side = 20;
 
     for (int x = xEdgeSpacing; x < xEdgeSpacing + recWidth; x += side) {
-        
         for (int y = yEdgeSpacing; y < yEdgeSpacing + recHeight; y += side) {
             if (x == xEdgeSpacing || x == xEdgeSpacing + recWidth - side || y == yEdgeSpacing || y == yEdgeSpacing + recHeight - side) {
+                colorSwitcher *= -1;
                 unsigned short color;
                 switch (colorSwitcher) {
                     case -1: 
@@ -106,7 +107,7 @@ void drawRectangle(unsigned short color1, unsigned short color2) {
                         b[x+i+480*(y+j)] = color;
                     }
                 }
-                colorSwitcher *= -1;
+                
             }
         }
         colorSwitcher *= -1;
@@ -115,3 +116,4 @@ void drawRectangle(unsigned short color1, unsigned short color2) {
 
 
 
+tf("Goodbye start\n");
