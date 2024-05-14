@@ -103,9 +103,9 @@ void drawBall (Ball* ball, unsigned short color) {
   }
 }
 
-void drawBackgroundBlack() {
+void drawBackground(unsigned short color) {
     for (int ptr = 0; ptr < 480*320 ; ptr++) {
-        fb[ptr] = 0;
+        fb[ptr] = color;
         parlcd_write_data(parlcd_mem_base, fb[ptr]);
     }
 }
@@ -117,4 +117,39 @@ void renderLCD() {
 }
  
 
- 
+void drawRectangle(unsigned short color1, unsigned short color2) {
+    int xEdgeSpacing = 80;
+    int yEdgeSpacing = 30;
+
+    int recWidth = 320;
+    int recHeight = 200;
+
+    int colorSwitcher = -1;
+
+    int side = 20;
+
+    for (int x = xEdgeSpacing; x < xEdgeSpacing + recWidth; x += side) {
+        for (int y = yEdgeSpacing; y < yEdgeSpacing + recHeight; y += side) {
+            if (x == xEdgeSpacing || x == xEdgeSpacing + recWidth - side || y == yEdgeSpacing || y == yEdgeSpacing + recHeight - side) {
+                colorSwitcher *= -1;
+                unsigned short color;
+                switch (colorSwitcher) {
+                    case -1: 
+                    color = color1;
+                    break;
+                default:
+
+                    color = color2;
+                    break;
+                }
+                for (int i=0; i<side; i++) {
+                    for (int j=0; j<side; j++) {
+                        fb[x+i+480*(y+j)] = color;
+                    }
+                }
+                
+            }
+        }
+        colorSwitcher *= -1;
+    }
+}

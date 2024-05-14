@@ -12,6 +12,7 @@ void highlightCurrentChoice(int x, int y, int w, int h, unsigned short color);
 void drawRacket(Racket* racket, unsigned short color);
 void drawBall(Ball* ball, unsigned short color);
 void renderLCD();
-void drawBackgroundBlack(); 
+void drawBackground(unsigned short color); 
+void drawRectangle(unsigned short color1, unsigned short color2);
 
 #endif
