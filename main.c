@@ -16,6 +16,7 @@
 #include "racket.h"
 #include "led.h"
 #include "knobs.h"
+#include "start.h"
 
 #define WIDTH 480
 #define HEIGHT 320
@@ -23,16 +24,14 @@
 #include "font_types.h"
  
 unsigned short *fb;
+unsigned char *parlcd_mem_base;
 
-
-
+void draw_char(int x, int y, font_descriptor_t* fdes, char ch) {
+}
 void draw_pixel(int x, int y, unsigned short color) {
   if (x>=0 && x<480 && y>=0 && y<320) {
     fb[x+480*y] = color;
   }
-}
- 
-void draw_char(int x, int y, font_descriptor_t* fdes, char ch) {
 }
  
 int char_width(font_descriptor_t* fdes, int ch) {
@@ -51,19 +50,20 @@ int char_width(font_descriptor_t* fdes, int ch) {
 Racket rackets[2];
  
 int main(int argc, char *argv[]) {
-  unsigned char *parlcd_mem_base;
-  int i,j,k;
+  
   int ptr;
   unsigned int c;
   fb  = (unsigned short *)malloc(320*480*2);
  
-  printf("Hello world\n");
+  printf("Hello world!!!!\n");
  
   sleep(1);
   /*
    * Setup memory mapping which provides access to the peripheral
    * registers region of RGB LEDs, knobs and line of yellow LEDs.
    */
+
+  
   ledInit();
   ledLineLightUp();
   parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
@@ -72,8 +72,11 @@ int main(int argc, char *argv[]) {
     exit(1);
  
   parlcd_hx8357_init(parlcd_mem_base);
-
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
+
+  startMenu( parlcd_mem_base);
+
+  
   for (ptr = 0; ptr < 480*320 ; ptr++) {
       fb[ptr] = 0;
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
@@ -99,7 +102,8 @@ int main(int argc, char *argv[]) {
       parlcd_write_data(parlcd_mem_base, fb[ptr]);
   }
   while (moveBall(&new_ball, rackets)) {
-    
+    drawRacket(&rackets[1], 0xffff);
+    drawRacket(&rackets[0], 0xffff);
     drawBall(&new_ball, 0xe9dd);
 
 
@@ -134,14 +138,6 @@ int main(int argc, char *argv[]) {
     }
 
     
-    KnobsData kd = getKnobsValue();
-    uint8_t krn = kd.redKnob;
-    uint8_t kgn = kd.greenKnob;
-    draw_pixel_big(kr, kg, 0x0841);
-    draw_pixel_big(krn, kgn, 0x07f4);
-    printf("red %d green %d \n", krn, kgn);
-    kr = krn;
-    kg = kgn;
   }
  
 
@@ -161,12 +157,3 @@ int main(int argc, char *argv[]) {
 
 
 
-
-void draw_pixel_big(int x, int y, unsigned short color) {
-  int i,j;
-  for (i=0; i<20; i++) {
-    for (j=0; j<20; j++) {
-      draw_pixel(x+i, y+j, color);
-    }
-  }
-}
