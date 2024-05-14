@@ -5,12 +5,7 @@
 #define WIDTH 480
 #define HEIGHT 320
 
-extern unsigned short *fb;
-void draw_pixel_ball(int x, int y, unsigned short color) {
-  if (x>=0 && x<480 && y>=0 && y<320) {
-    fb[x+480*y] = color;
-  }
-}
+
 
 void initBall(Ball* ball) {
     ball->w = 20;
@@ -51,17 +46,17 @@ bool moveBall(Ball* ball, Racket* rackets) {
     return true;
 }
 
-void drawBall (Ball* ball, unsigned short color) {
-  int x = ball->x;
-  int y = ball->y;
-  int w = ball->w;
-  int h = ball->h;
-  for (int x1 = x; x1 < w + x; x1 ++) {
-    for (int y1 = y; y1 < y + h; y1++) {
-      draw_pixel_ball(x1, y1, color);
-    }
-  }
-}
+// void drawBall (Ball* ball, unsigned short color) {
+//   int x = ball->x;
+//   int y = ball->y;
+//   int w = ball->w;
+//   int h = ball->h;
+//   for (int x1 = x; x1 < w + x; x1 ++) {
+//     for (int y1 = y; y1 < y + h; y1++) {
+//       draw_pixel_ball(x1, y1, color);
+//     }
+//   }
+// }
 
 bool checkCollisionX( Racket* rocket, Ball* ball, int rocketNumber) {
     // Calculate the sides of the rectangle
