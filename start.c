@@ -116,4 +116,3 @@ void drawRectangle(unsigned short color1, unsigned short color2) {
 
 
 
-tf("Goodbye start\n");
