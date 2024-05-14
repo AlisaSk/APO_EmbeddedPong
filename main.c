@@ -18,6 +18,7 @@
 #include "knobs.h"
 #include "menu.h"
 #include "start.h"
+#include "botmenu.h"
 
 #define WIDTH 480
 #define HEIGHT 320
