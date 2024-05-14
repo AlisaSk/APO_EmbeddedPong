@@ -18,7 +18,7 @@
 #include "knobs.h"
 #include "menu.h"
 #include "start.h"
-#include "botmenu.h"
+#include "painter.h"
 
 #define WIDTH 480
 #define HEIGHT 320
@@ -29,14 +29,6 @@ unsigned short *fb;
 unsigned char *parlcd_mem_base;
 int player1Score = 0;
 int player2Score = 0;
-
-
-void draw_pixel(int x, int y, unsigned short color) {
-  if (x>=0 && x<480 && y>=0 && y<320) {
-    fb[x+480*y] = color;
-  }
-}
- 
 
 
 Racket rackets[2];
@@ -51,14 +43,7 @@ int main(int argc, char *argv[]) {
   printf("Hello world!!!!\n");
  
   sleep(1);
-  /*
-   * Setup memory mapping which provides access to the peripheral
-   * registers region of RGB LEDs, knobs and line of yellow LEDs.
-   */
-
-
   ledInit();
-  // ledLineLightUp();
   parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
  
   if (parlcd_mem_base == NULL)
@@ -67,22 +52,14 @@ int main(int argc, char *argv[]) {
   parlcd_hx8357_init(parlcd_mem_base);
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
 
-  startPage(parlcd_mem_base);
-
-  int mode = startMenu( parlcd_mem_base);
+  startPage();
+  int mode = startMenu();
 
   
-  for (ptr = 0; ptr < 480*320 ; ptr++) {
-      fb[ptr] = 0;
-      parlcd_write_data(parlcd_mem_base, fb[ptr]);
-  }
+  drawBackground(0x0000);
   
   if (mode == 2) {
     while (roundCount != 4) {
-      for (ptr = 0; ptr < 480*320 ; ptr++) {
-          fb[ptr] = 0;
-          parlcd_write_data(parlcd_mem_base, fb[ptr]);
-      }
       initRacket(&rackets[0], 1);
       initRacket(&rackets[1], 2);
       drawRacket(&rackets[0], 0xffff);
@@ -98,9 +75,7 @@ int main(int argc, char *argv[]) {
       uint8_t kg = kd.greenKnob;
       uint8_t kb = kd.blueKnob;
 
-      for (ptr = 0; ptr < 480*320 ; ptr++) {
-          parlcd_write_data(parlcd_mem_base, fb[ptr]);
-      }
+      renderLCD();
       while (moveBall(&new_ball, rackets)) {
         
         drawBall(&new_ball, 0xe9dd);
@@ -132,9 +107,7 @@ int main(int argc, char *argv[]) {
         kg = kgn;
         kb = kbn;
 
-        for (ptr = 0; ptr < 480*320 ; ptr++) {
-          parlcd_write_data(parlcd_mem_base, fb[ptr]);
-        }
+        renderLCD();
 
         
       }
@@ -142,17 +115,13 @@ int main(int argc, char *argv[]) {
     }
   }
   else {
-      for (ptr = 0; ptr < 480*320 ; ptr++) {
-      fb[ptr] = 0x07ff;
-      parlcd_write_data(parlcd_mem_base, fb[ptr]);
+      drawBackground(0xf012);
     }
-  }
+  
  
 
 
-  for (ptr = 0; ptr < 480*320 ; ptr++) {
-      parlcd_write_data(parlcd_mem_base, fb[ptr]);
-    }
+  renderLCD();
  
   char str[]="Goodbye world";
   char *ch=str;
@@ -163,3 +132,6 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
+// void showScores() {
+
+// }
