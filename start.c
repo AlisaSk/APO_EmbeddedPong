@@ -7,7 +7,7 @@
 unsigned short *b;
 
 
-void startMenu( unsigned char *parlcd_mem_base) {
+void startPage( unsigned char *parlcd_mem_base) {
     int ptr;
     b  = (unsigned short *)malloc(320*480*2);
 
@@ -67,16 +67,6 @@ void startMenu( unsigned char *parlcd_mem_base) {
 }
 
 
-
-
-void draw_pixel_big(int x, int y, unsigned short color) {
-  int i,j;
-  for (i=0; i<20; i++) {
-    for (j=0; j<20; j++) {
-       b[x+i+480*(y+j)] = color;
-    }
-  }
-}
 
 void drawRectangle(unsigned short color1, unsigned short color2) {
     int xEdgeSpacing = 80;

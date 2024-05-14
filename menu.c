@@ -4,17 +4,19 @@
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include <time.h>
+#include <string.h>
 
 
-unsigned short* menuBuffer;
+static unsigned short* menuBuffer;
 static font_descriptor_t* fdes = &font_winFreeSystem14x16;
 static int scale = 4;
 
 int startMenu(unsigned char* parlcd_mem_base) {
+  
   menuBuffer = (unsigned short*) malloc(320*480*2);
   int gameMode = 1;
   for (int ptr = 0; ptr < 480*320 ; ptr++) {
-        menuBuffer[ptr] = 0x90f6;
+        menuBuffer[ptr] = 0;
         parlcd_write_data(parlcd_mem_base, menuBuffer[ptr]);
     }
   draw_word(120, 30, "MENU", 50, 0x90f6);
@@ -24,16 +26,23 @@ int startMenu(unsigned char* parlcd_mem_base) {
   initKnobs();
   KnobsData kd = getKnobsValue();
   uint8_t kr = kd.redKnob;
+  uint8_t kg = kd.greenKnob;
+  uint8_t kb = kd.blueKnob;
   uint8_t bg = kd.greenButton;
+  uint8_t br = kd.redButton;
+  uint8_t bb = kd.blueButton;
 
 
-  while (1) {
+  while (!bg && !br && !bb) {
     
     KnobsData nkd = getKnobsValue();
 
-    uint8_t bgn = nkd.greenButton;
     uint8_t krn = nkd.redKnob;
-    if (krn != kr) {
+    uint8_t kgn = nkd.greenKnob;
+    uint8_t kbn = nkd.blueKnob;
+
+
+    if (krn != kr || kbn != kb || kgn != kg) {
       gameMode = gameMode == 1 ? 2 : 1;
       
     }
@@ -46,24 +55,34 @@ int startMenu(unsigned char* parlcd_mem_base) {
       highlightCurrentChoice(110, 110, 250, 85, 0x0000);
       highlightCurrentChoice(110, 190, 280, 85, 0x07df);
     }
-    kr = krn;
+   
     for (int ptr = 0; ptr < 480*320 ; ptr++) {
         parlcd_write_data(parlcd_mem_base, menuBuffer[ptr]);
     }
-    if (bgn) {
+
+    kr = krn;
+    kg = kgn;
+    kb = kbn;
+
+    uint8_t bg = nkd.greenButton;
+    uint8_t br = nkd.redButton;
+    uint8_t bb = nkd.blueButton;
+    if (bg || br || bb) {
       break;
-    } 
+    }
+
     unsigned int ms_count = 0;
     clock_t start_time = clock();
-    while (ms_count < 250) {
+    while (ms_count < 100) {
         ms_count = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
     }
+
   }
- 
+  printf("Goodbye menu!\n");
   return gameMode;
 } 
 
-void draw_pixel(int x, int y, unsigned short color) {
+void draw_pixel_menu(int x, int y, unsigned short color) {
   if (x>=0 && x<480 && y>=0 && y<320) {
     menuBuffer[x+480*y] = color;
   }
@@ -107,7 +126,7 @@ void draw_pixel_big(int x, int y, unsigned short color) {
   int i,j;
   for (i = 0; i < scale; i++) {
     for (j = 0; j < scale; j++) {
-      draw_pixel(x+i, y+j, color);
+      draw_pixel_menu(x+i, y+j, color);
     }
   }
 }
@@ -124,7 +143,7 @@ void highlightCurrentChoice(int x, int y, int w, int h, unsigned short color ) {
   for (int x1 = x; x1 < x + w; x1++) {
     for (int y1 = y; y1 < y + h; y1++) {
       if (menuBuffer[x1+480*y1] != 0xfe80) {
-        draw_pixel(x1, y1, color);
+        draw_pixel_menu(x1, y1, color);
       }
     }
   }

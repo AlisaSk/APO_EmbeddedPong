@@ -12,13 +12,13 @@ LDLIBS += -lrt -lpthread
 SOURCES = main.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c led.c ball.c racket.c knobs.c menu.c start.c
 SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = main
-TARGET_IP ?= 192.168.223.127
+TARGET_IP ?= 192.168.223.119
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
 $(warning Run as "TARGET_IP=192.168.202.143 make run" or modify Makefile)
 # IP ADRESA
-TARGET_IP ?= 192.168.223.127
+TARGET_IP ?= 192.168.223.119
 endif
 endif
 TARGET_DIR ?= /tmp/$(shell whoami)

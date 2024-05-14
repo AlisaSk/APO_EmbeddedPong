@@ -5,6 +5,8 @@
 #define WIDTH 480
 #define HEIGHT 320
 
+
+
 void initRacket(Racket* racket, int number) {
     racket->x = number == 1 ? 50 : WIDTH - 50;
     racket->y = HEIGHT / 2;
@@ -20,7 +22,7 @@ void drawRacket(Racket* racket, unsigned short color) {
   int h = racket->h;
   for (int x1 = x; x1 < w + x; x1 ++) {
     for (int y1 = y; y1 < y + h; y1++) {
-      draw_pixel_main(x1, y1, color);
+      draw_pixel(x1, y1, color);
     }
   }
 }
@@ -32,3 +34,5 @@ void moveRacket (Racket* racket, int number) {
     racket->y =  y1;
   }
 }
+
+
