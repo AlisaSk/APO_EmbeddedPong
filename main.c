@@ -1,5 +1,3 @@
-#define _POSIX_C_SOURCE 200112L
- 
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -42,6 +40,8 @@ int main(int argc, char *argv[]) {
   
 
   fb  = (unsigned short *)malloc(320*480*2);
+  
+ 
   sleep(1);
   ledInit();
   parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);

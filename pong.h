@@ -4,5 +4,4 @@
 void playGameBot(int botMode);
 void playMultiplayer();
 
-
 #endif
