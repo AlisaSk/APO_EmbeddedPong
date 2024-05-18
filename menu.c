@@ -6,10 +6,12 @@
 #include "painter.h"
 #include <time.h>
 #include <string.h>
+#include "botmenu.h"
+#include "pong.h"
 
 
 
-int startMenu() {
+void startMenu() {
   printf("Player menu\n");
   int gameMode = 1;
   drawBackground(0x0000);
@@ -18,6 +20,13 @@ int startMenu() {
   draw_word(140, 30, "MENU", 50, 0x90f6, 4);
   draw_word(115, 120, "1 pLayer", 30, textColor, 4);
   draw_word(115, 200, "2 pLayers", 30, textColor, 4);
+  highlightCurrentChoice(110, 110, 250, 85, 0x07df, textColor);
+  renderLCD();
+  unsigned int ms_count = 0;
+  clock_t start_time = clock();
+  while (ms_count < 200) {
+    ms_count = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
+  }
 
   initKnobs();
   KnobsData kd = getKnobsValue();
@@ -73,6 +82,11 @@ int startMenu() {
 
   }
   printf("Goodbye player menu!\n");
-  return gameMode;
+  if (gameMode == 1) {
+    startBotMenu();
+  }
+  else {
+    playMultiplayer();
+  }
 } 
 

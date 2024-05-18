@@ -1,5 +1,5 @@
 #ifndef BOTMENU_H
 #define BOTMENU_H
 
-int startBotMenu();
+void startBotMenu();
 #endif
