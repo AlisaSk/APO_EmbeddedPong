@@ -90,3 +90,21 @@ void ledStartPage(int milisec) {
     ledLineClean();
     ledRGBClean();
 }
+
+void ledEndPage() {
+    struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 10 * 1000 * 1000}; // 20 milliseconds
+    uint32_t val_line = 10;
+    for (int i=0; i<30; i++) {
+        *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_LINE_o) = val_line;
+        val_line<<=1;
+        clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
+        ledRGBClean();
+    }
+    for (int i=0; i<30; i++) {
+        *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_LINE_o) = val_line;
+        val_line>>=1;
+        clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
+        ledRGBClean();
+    }
+    ledRGBClean();
+}
