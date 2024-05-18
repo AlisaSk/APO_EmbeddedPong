@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <time.h>
 #include <unistd.h>
+#include "end.h"
 
 extern int score1;
 extern int score2;
@@ -80,6 +81,7 @@ void playGameBot(int botMode) {
       }
         
     }
+    showEnd();
 }
 
 void playMultiplayer() {
@@ -147,6 +149,7 @@ void playMultiplayer() {
         scoreold2++;
       }
     }
+    showEnd();
 }
 
 

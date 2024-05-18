@@ -48,7 +48,6 @@ bool moveBall(Ball* ball, Racket* rackets) {
     int new_x = ball->x + ball->dx;
     int new_y = ball->y + ball->dy;
     
-    // bool isValidX = new_x >= 0 && new_x < WIDTH - ball->w;
     bool isValidX = !checkCollisionX(&rackets[0], ball, 1) && !checkCollisionX(&rackets[1], ball, 2);
     bool isValidY = (new_y >= 0 && new_y < HEIGHT - ball->h) && !checkCollisionY(&rackets[0], ball, 1) && !checkCollisionY(&rackets[1], ball, 2);
 

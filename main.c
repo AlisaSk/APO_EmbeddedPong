@@ -40,9 +40,6 @@ int main(int argc, char *argv[]) {
   
 
   fb  = (unsigned short *)malloc(320*480*2);
-  int roundCount = 1;
-  int botMainSpeed = 5;
-  int botSpeed;
   
  
   sleep(1);
@@ -57,24 +54,8 @@ int main(int argc, char *argv[]) {
 
   startPage();
   
-  int mode = startMenu();
-
-  
-  drawBackground(0x0000);
-  
-  if (mode == 2) {
-    playMultiplayer();
-  }
-  else {
-    int botMode = startBotMenu();
-    // botSpeed = diff * botMainSpeed;
-    playGameBot(botMode);
-  }
-
-  
-  
- 
   printf("Goodbye pong\n");
  
   return 0;
 }
+

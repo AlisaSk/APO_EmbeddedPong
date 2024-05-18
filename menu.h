@@ -2,7 +2,7 @@
 #define MENU_H
 
 
-int startMenu();
+void startMenu();
 
 
 
