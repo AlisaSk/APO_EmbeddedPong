@@ -2,39 +2,32 @@
 #include "racket.h"
 #include "led.h"
 #include "knobs.h"
-#include <stdlib.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <time.h>
-#include <unistd.h>
 #include "end.h"
+#include "painter.h"
+#include "headers.h"
 
 extern int score1;
 extern int score2;
 extern int scoreold1;
 extern int scoreold2; 
 extern Racket rackets[2];
-#define WIDTH 480
-#define HEIGHT 320
-
 
 void playGameBot(int botMode) {
     int botSpeed = botMode * 5;
-    drawBackground(0x0000);
+    drawBackground(BLACK);
     Ball newBall;
     initBall(&newBall, botMode);
   
     while (score1 != 5 && score2 != 5) {
-        drawBackground(0x0000);
+        drawBackground(BLACK);
         initRacket(&rackets[0], 1);
         initRacket(&rackets[1], 2);
-        drawRacket(&rackets[0], 0xffff);
-        drawRacket(&rackets[1], 0xffff);
+        drawRacket(&rackets[0], rackets[0].color);
+        drawRacket(&rackets[1], rackets[1].color);
 
         initBall(&newBall, botMode);
         
-        drawBall(&newBall, 0xe9dd);
+        drawBall(&newBall, PURPLE);
 
         initKnobs();
         KnobsData kd = getKnobsValue();
@@ -42,26 +35,26 @@ void playGameBot(int botMode) {
         renderLCD();
         while (moveBall(&newBall, rackets)) {
         
-            drawBall(&newBall, 0xe9dd);
-            drawRacket(&rackets[0], 0xffff);
+            drawBall(&newBall, PURPLE);
+            drawRacket(&rackets[0], rackets[0].color);
 
             KnobsData nkd = getKnobsValue();
             uint8_t krn = nkd.redKnob;
             if (krn > kr) {
                 moveRacket(&rackets[0], 10);
-                drawRacket(&rackets[0], 0xffff);
+                drawRacket(&rackets[0], rackets[0].color);
             }
             else if (krn < kr) {
                 moveRacket(&rackets[0], -10);
-                drawRacket(&rackets[0], 0xffff);
+                drawRacket(&rackets[0], rackets[0].color);
             }
 
             
             if (moveRacket(&rackets[1], botSpeed)) {
-                drawRacket(&rackets[1], 0xffff);
+                drawRacket(&rackets[1], rackets[1].color);
             }
             else {
-                drawRacket(&rackets[1], 0xffff);
+                drawRacket(&rackets[1], rackets[1].color);
                 botSpeed *= -1;
             }
 
@@ -87,17 +80,17 @@ void playMultiplayer() {
     Ball newBall;
     initBall(&newBall, 0);
     while (score1 != 5 && score2 != 5) {
-      drawBackground(0x0000);
+      drawBackground(BLACK);
       initRacket(&rackets[0], 1);
       initRacket(&rackets[1], 2);
-      drawRacket(&rackets[0], 0xffff);
-      drawRacket(&rackets[1], 0xffff);
+      drawRacket(&rackets[0], rackets[0].color);
+      drawRacket(&rackets[1], rackets[1].color);
 
       newBall.x = WIDTH / 2;
       newBall.y = HEIGHT / 2;
 
       
-      drawBall(&newBall, 0xe9dd);
+      drawBall(&newBall, PURPLE);
 
       initKnobs();
       KnobsData kd = getKnobsValue();
@@ -108,7 +101,7 @@ void playMultiplayer() {
       renderLCD();
       while (moveBall(&newBall, rackets)) {
         
-        drawBall(&newBall, 0xe9dd);
+        drawBall(&newBall, PURPLE);
 
 
         KnobsData nkd = getKnobsValue();
@@ -117,19 +110,19 @@ void playMultiplayer() {
         uint8_t kbn = nkd.blueKnob;
         if (krn > kr) {
           moveRacket(&rackets[0], 10);
-          drawRacket(&rackets[0], 0xffff);
+          drawRacket(&rackets[0], rackets[0].color);
         }
         else if (krn < kr) {
           moveRacket(&rackets[0], -10);
-          drawRacket(&rackets[0], 0xffff);
+          drawRacket(&rackets[0], rackets[0].color);
         }
         if (kbn > kb) {
           moveRacket(&rackets[1], 10);
-          drawRacket(&rackets[1], 0xffff);
+          drawRacket(&rackets[1], rackets[1].color);
         }
         else if (kbn < kb) {
           moveRacket(&rackets[1], -10);
-          drawRacket(&rackets[1], 0xffff);
+          drawRacket(&rackets[1], rackets[1].color);
         }
 
 

@@ -4,24 +4,22 @@
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "painter.h"
-
-#include <time.h>
-#include <string.h>
+#include "headers.h"
 
 /* This file contains all of the functions to load bot menu to choose difficulty*/
 
 void startBotMenu() {
   printf("Bot menu\n");
   int difficulty = 1;
-  unsigned short textColor = 0xfe80;
+  unsigned short textColor = YELLOW;
   drawBackground(0x0000);
 
   // adding difficulty page text
-  draw_word(17, 30, "CHOOSE GAME MODE", 29, 0x007f, 3);
+  draw_word(17, 30, "CHOOSE GAME MODE", 29, PURPLE, 3);
   draw_word(170, 100, "EASY", 29, textColor, 3);
   draw_word(170, 170, "NORMAL", 29, textColor, 3);
   draw_word(170, 250, "HARD", 29, textColor, 3);
-  highlightCurrentChoice(165, 90, 130, 65, 0x07df, textColor);
+  highlightCurrentChoice(165, 90, 130, 65, SKYBLUE, textColor);
   renderLCD();
   unsigned int msCount = 0;
   clock_t startTime = clock();
@@ -55,19 +53,19 @@ void startBotMenu() {
     
     //coloring and highliting text
     if (difficulty == 1) {
-      highlightCurrentChoice(165, 90, 130, 65, 0x07df, textColor);
-      highlightCurrentChoice(165, 160, 210, 65, 0x0000, textColor);
-      highlightCurrentChoice(165, 240, 140, 65, 0x0000, textColor);
+      highlightCurrentChoice(165, 90, 130, 65, SKYBLUE, textColor);
+      highlightCurrentChoice(165, 160, 210, 65, BLACK, textColor);
+      highlightCurrentChoice(165, 240, 140, 65, BLACK, textColor);
     }
     else if (difficulty == 2) {
-      highlightCurrentChoice(165, 90, 130, 65, 0x0000, textColor);
-      highlightCurrentChoice(165, 160, 210, 65, 0x07df, textColor);
-      highlightCurrentChoice(165, 240, 140, 65, 0x0000, textColor);
+      highlightCurrentChoice(165, 90, 130, 65, BLACK, textColor);
+      highlightCurrentChoice(165, 160, 210, 65, SKYBLUE, textColor);
+      highlightCurrentChoice(165, 240, 140, 65, BLACK, textColor);
     }
     else if (difficulty == 3) {
-      highlightCurrentChoice(165, 90, 130, 65, 0x0000, textColor);
-      highlightCurrentChoice(165, 160, 210, 65, 0x0000, textColor);
-      highlightCurrentChoice(165, 240, 140, 65, 0x07df, textColor);
+      highlightCurrentChoice(165, 90, 130, 65, BLACK, textColor);
+      highlightCurrentChoice(165, 160, 210, 65, BLACK, textColor);
+      highlightCurrentChoice(165, 240, 140, 65, SKYBLUE, textColor);
     }
    
     renderLCD();

@@ -1,9 +1,8 @@
 #include "led.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
-#include <time.h>
-#include <stdint.h>
-#include <stdio.h>
+#include "headers.h"
+
 
 static unsigned char *ledMemBase;
 
