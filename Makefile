@@ -15,13 +15,13 @@ SOURCES = main.c $(SRC_PATH)/mzapo_phys.c $(SRC_PATH)/mzapo_parlcd.c $(SRC_PATH)
 SOURCES += $(SRC_PATH)/font_prop14x16.c $(SRC_PATH)/font_rom8x16.c
 SOURCES += botmenu.c pong.c end.c led.c ball.c racket.c knobs.c menu.c start.c painter.c
 TARGET_EXE = main
-TARGET_IP ?= 192.168.223.211
+TARGET_IP ?= 192.168.223.100
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
 $(warning Run as "TARGET_IP=192.168.202.143 make run" or modify Makefile)
 # IP ADRESA
-TARGET_IP ?= 192.168.223.157
+TARGET_IP ?= 192.168.223.100
 endif
 endif
 TARGET_DIR ?= /tmp/$(shell whoami)
