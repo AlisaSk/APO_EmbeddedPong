@@ -16,7 +16,6 @@ void initRacket(Racket* racket, int number) {
     racket->color = 0xffff;
 }
 
-
 bool moveRacket (Racket* racket, int number) {
   int y1 = racket->y + number;
   if (y1 >= 0 && y1 <= HEIGHT - racket->h) {

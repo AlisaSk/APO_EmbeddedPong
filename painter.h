@@ -14,5 +14,6 @@ void drawBall(Ball* ball, unsigned short color);
 void renderLCD();
 void drawBackground(unsigned short color); 
 void drawRectangle(unsigned short color1, unsigned short color2);
+void drawScores(int score1, int score2);
 
 #endif

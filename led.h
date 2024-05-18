@@ -5,7 +5,7 @@
 
 bool ledInit();
 void ledLineClean();
-void ledLineLightUp();
+void ledWin(int winnerNum);
 void ledStartPage(int milisec);
 
 #endif

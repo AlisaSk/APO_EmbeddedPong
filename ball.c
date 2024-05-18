@@ -17,7 +17,7 @@ void initBall(Ball* ball) {
    
 }
 
-bool moveBall(Ball* ball, Racket* rackets) {
+bool moveBall(Ball* ball, Racket* rackets, int *score1, int *score2) {
     drawBall(ball, 0x0000);
     int new_x = ball->x + ball->dx;
     int new_y = ball->y + ball->dy;
@@ -32,7 +32,11 @@ bool moveBall(Ball* ball, Racket* rackets) {
         new_x = ball->x + ball->dx;
     }
 
-    if (new_x <= 0 + ball->w + 35|| new_x >= WIDTH - ball->w - 35) {
+    if (new_x <= 0 + ball->w) {
+      (*score1)++;
+      return false;
+    } else if (new_x >= WIDTH - ball->w){
+      (*score2)++;
       return false;
     }
 
@@ -45,7 +49,6 @@ bool moveBall(Ball* ball, Racket* rackets) {
     ball->y = new_y;
     return true;
 }
-
 
 
 bool checkCollisionX( Racket* rocket, Ball* ball, int rocketNumber) {

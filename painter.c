@@ -153,3 +153,11 @@ void drawRectangle(unsigned short color1, unsigned short color2) {
         colorSwitcher *= -1;
     }
 }
+
+
+void drawScores(int score1, int score2) {
+    char res[10];
+    sprintf(res, "%d:%d", score1, score2);
+    draw_word(165, 40, res, 45, 0x5fa3, 6);
+    renderLCD();
+}
