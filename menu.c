@@ -8,7 +8,7 @@
 #include "pong.h"
 #include "headers.h"
 
-
+/* This file contains all of the functions to choose game mode (multiplayer or single)*/
 
 void startMenu() {
   printf("Player menu\n");
@@ -21,13 +21,12 @@ void startMenu() {
   draw_word(115, 200, "2 pLayers", 30, textColor, 4);
   highlightCurrentChoice(110, 110, 250, 85, SKYBLUE, textColor);
   renderLCD();
-  unsigned int ms_count = 0;
-  clock_t start_time = clock();
-  while (ms_count < 200) {
-    ms_count = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
+  unsigned int msCount = 0;
+  clock_t startTime = clock();
+  while (msCount < 200) {
+      msCount = (clock() -startTime) * 1000 / CLOCKS_PER_SEC;
   }
 
-  initKnobs();
   KnobsData kd = getKnobsValue();
   uint8_t kr = kd.redKnob;
   uint8_t kg = kd.greenKnob;
@@ -73,10 +72,10 @@ void startMenu() {
       break;
     }
 
-    unsigned int ms_count = 0;
-    clock_t start_time = clock();
-    while (ms_count < 200) {
-        ms_count = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
+    unsigned int msCount = 0;
+    clock_t startTime = clock();
+    while (msCount < 200) {
+        msCount = (clock() -startTime) * 1000 / CLOCKS_PER_SEC;
     }
 
   }

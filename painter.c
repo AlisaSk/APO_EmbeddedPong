@@ -5,6 +5,8 @@ extern unsigned short *fb;
 extern unsigned char *parlcd_mem_base;
 font_descriptor_t* fdes = &font_winFreeSystem14x16;
 
+/* This file contains all of the functions to draw pixel on the screen */
+
 
 void draw_word(int x, int y, char* word, int offset,  unsigned short color, int scale) {
   int x1 = x;

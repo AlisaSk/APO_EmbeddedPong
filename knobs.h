@@ -16,7 +16,7 @@ typedef struct {
     bool blueButton;
 } KnobsData;
 
-static unsigned char *mem_base;
+static unsigned char *memBase;
 
 bool initKnobs();
 
