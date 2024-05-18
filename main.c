@@ -21,8 +21,6 @@
 #include "pong.h"
 #include "font_types.h"
 
-#define WIDTH 480
-#define HEIGHT 320
  
 
  

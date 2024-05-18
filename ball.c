@@ -3,8 +3,7 @@
 #include "mzapo_regs.h"
 #include "headers.h"
 
-#define WIDTH 480
-#define HEIGHT 320
+
 
 extern int score1;
 extern int score2;
