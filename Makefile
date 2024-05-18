@@ -10,13 +10,9 @@ LDLIBS += -lrt -lpthread
 #LDLIBS += -lm
 
 SOURCES = main.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c led.c ball.c racket.c knobs.c menu.c start.c painter.c
-SOURCES += font_prop14x16.c font_rom8x16.c botmenu.c pong.c
+SOURCES += font_prop14x16.c font_rom8x16.c botmenu.c pong.c end.c
 TARGET_EXE = main
-<<<<<<< HEAD
 TARGET_IP ?= 192.168.223.100
-=======
-TARGET_IP ?= 192.168.223.211
->>>>>>> dev
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)

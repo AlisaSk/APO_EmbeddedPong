@@ -5,7 +5,8 @@
 #define WIDTH 480
 #define HEIGHT 320
 
-
+extern int score1;
+extern int score2;
 
 void initBall(Ball* ball) {
     ball->w = 20;
@@ -17,12 +18,11 @@ void initBall(Ball* ball) {
    
 }
 
-bool moveBall(Ball* ball, Racket* rackets, int *score1, int *score2) {
+bool moveBall(Ball* ball, Racket* rackets) {
     drawBall(ball, 0x0000);
     int new_x = ball->x + ball->dx;
     int new_y = ball->y + ball->dy;
     
-    // bool isValidX = new_x >= 0 && new_x < WIDTH - ball->w;
     bool isValidX = !checkCollisionX(&rackets[0], ball, 1) && !checkCollisionX(&rackets[1], ball, 2);
     bool isValidY = (new_y >= 0 && new_y < HEIGHT - ball->h) && !checkCollisionY(&rackets[0], ball, 1) && !checkCollisionY(&rackets[1], ball, 2);
 
@@ -33,10 +33,10 @@ bool moveBall(Ball* ball, Racket* rackets, int *score1, int *score2) {
     }
 
     if (new_x <= 0 + ball->w) {
-      (*score1)++;
+      score2++;
       return false;
     } else if (new_x >= WIDTH - ball->w){
-      (*score2)++;
+      score1++;
       return false;
     }
 

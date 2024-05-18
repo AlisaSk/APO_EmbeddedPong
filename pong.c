@@ -9,19 +9,19 @@
 #include <stdint.h>
 #include <time.h>
 #include <unistd.h>
+#include "end.h"
 
-int player1Score = 0;
-int player2Score = 0;
-Racket rackets[2];
+extern int score1;
+extern int score2;
+extern int scoreold1;
+extern int scoreold2; 
+extern Racket rackets[2];
 
 
 void playGameBot(int botSpeed) {
-    int roundCount = 1;
-
     drawBackground(0x0000);
   
-  
-    while (roundCount != 4) {
+    while (score1 != 1 && score2 != 5) {
         drawBackground(0x0000);
         initRacket(&rackets[0], 1);
         initRacket(&rackets[1], 2);
@@ -35,7 +35,6 @@ void playGameBot(int botSpeed) {
         initKnobs();
         KnobsData kd = getKnobsValue();
         uint8_t kr = kd.redKnob;
-        int counter = 0;
         renderLCD();
         while (moveBall(&new_ball, rackets)) {
         
@@ -66,9 +65,88 @@ void playGameBot(int botSpeed) {
         kr = krn;
 
         renderLCD();
-        counter++;
+        
         
         }
-        roundCount++;
+      showScores();
+      
+      if (score1 > scoreold1) {
+        scoreold1++;
+      } else {
+        scoreold2++;
+      }
+        
     }
+    showEnd();
+}
+
+void playMultiplayer() {
+    while (score1 != 1 && score2 != 5) {
+      drawBackground(0x0000);
+      initRacket(&rackets[0], 1);
+      initRacket(&rackets[1], 2);
+      drawRacket(&rackets[0], 0xffff);
+      drawRacket(&rackets[1], 0xffff);
+
+      Ball new_ball;
+      initBall(&new_ball);
+      drawBall(&new_ball, 0xe9dd);
+
+      initKnobs();
+      KnobsData kd = getKnobsValue();
+      uint8_t kr = kd.redKnob;
+      uint8_t kg = kd.greenKnob;
+      uint8_t kb = kd.blueKnob;
+
+      renderLCD();
+      while (moveBall(&new_ball, rackets)) {
+        
+        drawBall(&new_ball, 0xe9dd);
+
+
+        KnobsData nkd = getKnobsValue();
+        uint8_t krn = nkd.redKnob;
+        uint8_t kgn = nkd.greenKnob;
+        uint8_t kbn = nkd.blueKnob;
+        if (krn > kr) {
+          moveRacket(&rackets[0], 10);
+          drawRacket(&rackets[0], 0xffff);
+        }
+        else if (krn < kr) {
+          moveRacket(&rackets[0], -10);
+          drawRacket(&rackets[0], 0xffff);
+        }
+        if (kbn > kb) {
+          moveRacket(&rackets[1], 10);
+          drawRacket(&rackets[1], 0xffff);
+        }
+        else if (kbn < kb) {
+          moveRacket(&rackets[1], -10);
+          drawRacket(&rackets[1], 0xffff);
+        }
+
+
+        kr = krn;
+        kg = kgn;
+        kb = kbn;
+
+        renderLCD();
+
+        
+      }
+      showScores();
+      if (score1 > scoreold1) {
+        scoreold1++;
+      } else {
+        scoreold2++;
+      }
+    }
+    showEnd();
+}
+
+
+void showScores() {
+  drawScores(score1, score2);
+  int winner = score1 >scoreold1 ? 1: 2;
+  ledWin(winner);
 }

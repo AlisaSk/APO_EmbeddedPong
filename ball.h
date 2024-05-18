@@ -11,7 +11,7 @@ typedef struct Ball {
 } Ball;
 
 void initBall(Ball* ball);
-bool moveBall(Ball* ball, Racket* rackets, int *score1, int *score2);
+bool moveBall(Ball* ball, Racket* rackets);
 bool checkCollisionX( Racket* rocket, Ball* ball, int rocketNumber);
 bool checkCollisionY( Racket* rocket, Ball* ball, int rocketNumber);
 

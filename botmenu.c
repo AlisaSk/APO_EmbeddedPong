@@ -9,15 +9,25 @@
 #include <string.h>
 
 
-int startBotMenu() {
+void startBotMenu() {
   printf("Bot menu\n");
   int difficulty = 1;
+  int botSpeed;
+  int botMainSpeed = 8;
   unsigned short textColor = 0xfe80;
   drawBackground(0x0000);
   draw_word(17, 30, "CHOOSE GAME MODE", 29, 0x007f, 3);
   draw_word(170, 100, "EASY", 29, textColor, 3);
   draw_word(170, 170, "NORMAL", 29, textColor, 3);
   draw_word(170, 250, "HARD", 29, textColor, 3);
+  highlightCurrentChoice(165, 90, 130, 65, 0x07df, textColor);
+  renderLCD();
+  unsigned int ms_count = 0;
+  clock_t start_time = clock();
+  while (ms_count < 200) {
+    ms_count = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
+  }
+  
 
   initKnobs();
   KnobsData kd = getKnobsValue();
@@ -80,7 +90,8 @@ int startBotMenu() {
   }
 
   printf("Goodbye bot menu!\n");
-  return difficulty;
+  botSpeed = difficulty * botMainSpeed;
+  playGameBot(botSpeed);
 }
 
 

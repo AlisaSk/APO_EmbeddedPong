@@ -2,6 +2,7 @@
 #include "font_types.h"
 #include "led.h"
 #include "painter.h"
+#include "menu.h"
 
 #define WIDTH 480
 #define HEIGHT 320
@@ -77,8 +78,8 @@ void startPage( ) {
 
     }
     
-
     printf("Goodbye start\n");
+    startMenu();
 }
 
 
