@@ -18,9 +18,9 @@ extern int scoreold2;
 extern Racket rackets[2];
 
 
-void playGameBot(int botSpeed) {
+void playGameBot(int botMode) {
     drawBackground(0x0000);
-  
+    int botSpeed = 3 * botMode;
     while (score1 != 1 && score2 != 5) {
         drawBackground(0x0000);
         initRacket(&rackets[0], 1);

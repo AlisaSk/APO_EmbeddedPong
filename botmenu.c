@@ -12,8 +12,6 @@
 void startBotMenu() {
   printf("Bot menu\n");
   int difficulty = 1;
-  int botSpeed;
-  int botMainSpeed = 8;
   unsigned short textColor = 0xfe80;
   drawBackground(0x0000);
   draw_word(17, 30, "CHOOSE GAME MODE", 29, 0x007f, 3);
@@ -90,8 +88,7 @@ void startBotMenu() {
   }
 
   printf("Goodbye bot menu!\n");
-  botSpeed = difficulty * botMainSpeed;
-  playGameBot(botSpeed);
+  playGameBot(difficulty);
 }
 
 
