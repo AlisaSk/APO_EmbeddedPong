@@ -1,5 +1,3 @@
-#define _POSIX_C_SOURCE 200112L
- 
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -34,7 +32,6 @@ int score2 = 0;
 int scoreold1 = 0;
 int scoreold2 = 0;
 
-
 Racket rackets[2];
 
 void showScores();
@@ -46,7 +43,7 @@ int main(int argc, char *argv[]) {
   int roundCount = 1;
   int botMainSpeed = 5;
   int botSpeed;
- 
+  
  
   sleep(1);
   ledInit();
@@ -66,70 +63,12 @@ int main(int argc, char *argv[]) {
   drawBackground(0x0000);
   
   if (mode == 2) {
-    while (score1 != 5 && score2 != 5) {
-      drawBackground(0x0000);
-      initRacket(&rackets[0], 1);
-      initRacket(&rackets[1], 2);
-      drawRacket(&rackets[0], 0xffff);
-      drawRacket(&rackets[1], 0xffff);
-
-      Ball new_ball;
-      initBall(&new_ball);
-      drawBall(&new_ball, 0xe9dd);
-
-      initKnobs();
-      KnobsData kd = getKnobsValue();
-      uint8_t kr = kd.redKnob;
-      uint8_t kg = kd.greenKnob;
-      uint8_t kb = kd.blueKnob;
-
-      renderLCD();
-      while (moveBall(&new_ball, rackets, &score1, &score2)) {
-        
-        drawBall(&new_ball, 0xe9dd);
-
-
-        KnobsData nkd = getKnobsValue();
-        uint8_t krn = nkd.redKnob;
-        uint8_t kgn = nkd.greenKnob;
-        uint8_t kbn = nkd.blueKnob;
-        if (krn > kr) {
-          moveRacket(&rackets[0], 10);
-          drawRacket(&rackets[0], 0xffff);
-        }
-        else if (krn < kr) {
-          moveRacket(&rackets[0], -10);
-          drawRacket(&rackets[0], 0xffff);
-        }
-        if (kbn > kb) {
-          moveRacket(&rackets[1], 10);
-          drawRacket(&rackets[1], 0xffff);
-        }
-        else if (kbn < kb) {
-          moveRacket(&rackets[1], -10);
-          drawRacket(&rackets[1], 0xffff);
-        }
-
-
-        kr = krn;
-        kg = kgn;
-        kb = kbn;
-
-        renderLCD();
-
-        
-      }
-      showScores();
-      roundCount++;
-      if (score1 > scoreold1) {
-        scoreold1++;
-      } else {
-        scoreold2++;
-      }
-    }
-    int diff = startBotMenu();
-    botSpeed = diff * botMainSpeed;
-    playGameBot(botSpeed);
+    playMultiplayer();
+  }
+  else {
+    int botMode = startBotMenu();
+    // botSpeed = diff * botMainSpeed;
+    playGameBot(botMode);
   }
 
   
@@ -138,10 +77,4 @@ int main(int argc, char *argv[]) {
   printf("Goodbye pong\n");
  
   return 0;
-}
-
-void showScores() {
-  drawScores(score1, score2);
-  int winner = score1 >scoreold1 ? 1: 2;
-  ledWin(winner);
 }

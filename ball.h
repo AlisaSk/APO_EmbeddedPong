@@ -10,8 +10,8 @@ typedef struct Ball {
   int dx, dy; /* movement vector */
 } Ball;
 
-void initBall(Ball* ball);
-bool moveBall(Ball* ball, Racket* rackets, int *score1, int *score2);
+void initBall(Ball* ball, int botSpeed);
+bool moveBall(Ball* ball, Racket* rackets);
 bool checkCollisionX( Racket* rocket, Ball* ball, int rocketNumber);
 bool checkCollisionY( Racket* rocket, Ball* ball, int rocketNumber);
 

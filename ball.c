@@ -1,23 +1,49 @@
 #include "ball.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
+#include <time.h>
 
 #define WIDTH 480
 #define HEIGHT 320
 
+extern int score1;
+extern int score2;
 
-
-void initBall(Ball* ball) {
-    ball->w = 20;
-    ball->h = 20;
-    ball->x = WIDTH / 2;
-    ball->y = HEIGHT / 2;
-    ball->dx = 5;
-    ball->dy = 5;
+void initBall(Ball* ball, int botSpeed) {
+  ball->w = 20;
+  ball->h = 20;
+  ball->x = WIDTH / 2;
+  ball->y = HEIGHT / 2;
+   
+  if (botSpeed == 0) {
+     /* Intializes random number generator for multiplayer*/
+    time_t t;
+    srand((unsigned) time(&t));
+    int minSpeed = 4;
+    ball->dx = rand() % 2 + minSpeed;
+    ball->dy = rand() % 2 + minSpeed;
+   } else {
+    switch(botSpeed) {
+      case 3:
+        ball->dx = -8;
+        ball->dy = 8;
+        break;
+      case 2:
+        ball->dx = 6;
+        ball->dy = -6;
+        break;
+      default:
+        ball->dx = -4;
+        ball->dy = 4;
+        break;
+    }
+   }
+   
+   
    
 }
 
-bool moveBall(Ball* ball, Racket* rackets, int *score1, int *score2) {
+bool moveBall(Ball* ball, Racket* rackets) {
     drawBall(ball, 0x0000);
     int new_x = ball->x + ball->dx;
     int new_y = ball->y + ball->dy;
@@ -32,11 +58,11 @@ bool moveBall(Ball* ball, Racket* rackets, int *score1, int *score2) {
         new_x = ball->x + ball->dx;
     }
 
-    if (new_x <= 0 + ball->w) {
-      (*score1)++;
+    if (new_x <= 0 + ball->w + 25) {
+      score2++;
       return false;
-    } else if (new_x >= WIDTH - ball->w){
-      (*score2)++;
+    } else if (new_x >= WIDTH - ball->w - 25){
+      score1++;
       return false;
     }
 
