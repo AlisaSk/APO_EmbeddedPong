@@ -4,10 +4,9 @@
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "painter.h"
-#include <time.h>
-#include <string.h>
 #include "botmenu.h"
 #include "pong.h"
+#include "headers.h"
 
 
 
@@ -16,11 +15,11 @@ void startMenu() {
   int gameMode = 1;
   drawBackground(0x0000);
 
-  unsigned short textColor = 0xfe80;
-  draw_word(140, 30, "MENU", 50, 0x90f6, 4);
+  unsigned short textColor = YELLOW;
+  draw_word(140, 30, "MENU", 50, PURPLE, 4);
   draw_word(115, 120, "1 pLayer", 30, textColor, 4);
   draw_word(115, 200, "2 pLayers", 30, textColor, 4);
-  highlightCurrentChoice(110, 110, 250, 85, 0x07df, textColor);
+  highlightCurrentChoice(110, 110, 250, 85, SKYBLUE, textColor);
   renderLCD();
   unsigned int ms_count = 0;
   clock_t start_time = clock();
@@ -53,12 +52,12 @@ void startMenu() {
     }
     
     if (gameMode == 1) {
-      highlightCurrentChoice(110, 110, 250, 85, 0x07df, textColor);
-      highlightCurrentChoice(110, 190, 280, 85, 0x0000, textColor);
+      highlightCurrentChoice(110, 110, 250, 85, SKYBLUE, textColor);
+      highlightCurrentChoice(110, 190, 280, 85, BLACK, textColor);
     }
     else if (gameMode == 2) {
-      highlightCurrentChoice(110, 110, 250, 85, 0x0000, textColor);
-      highlightCurrentChoice(110, 190, 280, 85, 0x07df, textColor);
+      highlightCurrentChoice(110, 110, 250, 85, BLACK, textColor);
+      highlightCurrentChoice(110, 190, 280, 85, SKYBLUE, textColor);
     }
    
     renderLCD();

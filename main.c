@@ -19,11 +19,10 @@
 #include "painter.h"
 #include "botmenu.h"
 #include "pong.h"
-
-#define WIDTH 480
-#define HEIGHT 320
- 
 #include "font_types.h"
+
+ 
+
  
 unsigned short *fb;
 unsigned char *parlcd_mem_base;
@@ -34,7 +33,7 @@ int scoreold2 = 0;
 
 Racket rackets[2];
 
-void showScores();
+// void showScores();
  
 int main(int argc, char *argv[]) {
   

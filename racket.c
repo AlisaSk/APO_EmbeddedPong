@@ -1,11 +1,7 @@
 #include "racket.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
-#include <stdbool.h> 
-
-#define WIDTH 480
-#define HEIGHT 320
-
+#include "headers.h"
 
 
 void initRacket(Racket* racket, int number) {
@@ -13,7 +9,7 @@ void initRacket(Racket* racket, int number) {
     racket->y = HEIGHT / 2;
     racket->w = 20;
     racket->h = 100;
-    racket->color = 0xffff;
+    racket->color = number == 1 ? PLAYER_1_COLOR: PLAYER_2_COLOR;
 }
 
 bool moveRacket (Racket* racket, int number) {
