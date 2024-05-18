@@ -68,11 +68,11 @@ int char_width(int ch) {
 }
 
 
-void highlightCurrentChoice(int x, int y, int w, int h, unsigned short color) {
+void highlightCurrentChoice(int x, int y, int w, int h, unsigned short backgroundColor, unsigned short textColor) {
   for (int x1 = x; x1 < x + w; x1++) {
     for (int y1 = y; y1 < y + h; y1++) {
-      if (fb[x1+480*y1] != 0xfe80) {
-        draw_pixel(x1, y1, color);
+      if (fb[x1+480*y1] != textColor) {
+        draw_pixel(x1, y1, backgroundColor);
       }
     }
   }

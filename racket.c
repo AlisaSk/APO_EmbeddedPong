@@ -1,6 +1,7 @@
 #include "racket.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
+#include <stdbool.h> 
 
 #define WIDTH 480
 #define HEIGHT 320
@@ -20,7 +21,9 @@ bool moveRacket (Racket* racket, int number) {
   if (y1 >= 0 && y1 <= HEIGHT - racket->h) {
     drawRacket(racket, 0x0000);
     racket->y =  y1;
+    return true;
   }
+  return false;
 }
 
 
