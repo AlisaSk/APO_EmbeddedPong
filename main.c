@@ -7,7 +7,7 @@
 #include <time.h>
 #include <unistd.h>
  
-// #include "../module1/header1.h"
+
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
@@ -19,6 +19,8 @@
 #include "menu.h"
 #include "start.h"
 #include "painter.h"
+#include "botmenu.h"
+#include "pong.h"
 
 #define WIDTH 480
 #define HEIGHT 320
@@ -39,12 +41,12 @@ void showScores();
  
 int main(int argc, char *argv[]) {
   
-  int ptr;
-  unsigned int c;
+
   fb  = (unsigned short *)malloc(320*480*2);
   int roundCount = 1;
+  int botMainSpeed = 5;
+  int botSpeed;
  
-  printf("Hello world!!!!\n");
  
   sleep(1);
   ledInit();
@@ -57,6 +59,7 @@ int main(int argc, char *argv[]) {
   parlcd_write_cmd(parlcd_mem_base, 0x2c);
 
   startPage();
+  
   int mode = startMenu();
 
   
@@ -124,21 +127,15 @@ int main(int argc, char *argv[]) {
         scoreold2++;
       }
     }
+    int diff = startBotMenu();
+    botSpeed = diff * botMainSpeed;
+    playGameBot(botSpeed);
   }
-  else {
-      drawBackground(0xf012);
-    }
+
+  
   
  
-
-
-  renderLCD();
- 
-  char str[]="Goodbye world";
-  char *ch=str;
-  font_descriptor_t* fdes = &font_winFreeSystem14x16;
- 
-  printf("Goodbye world\n");
+  printf("Goodbye pong\n");
  
   return 0;
 }
