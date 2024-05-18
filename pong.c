@@ -81,6 +81,7 @@ void playGameBot(int botMode) {
       }
         
     }
+    showEnd();
 }
 
 void playMultiplayer() {
@@ -148,6 +149,7 @@ void playMultiplayer() {
         scoreold2++;
       }
     }
+    showEnd();
 }
 
 
