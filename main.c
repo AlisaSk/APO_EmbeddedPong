@@ -27,11 +27,15 @@
  
 unsigned short *fb;
 unsigned char *parlcd_mem_base;
-int player1Score = 0;
-int player2Score = 0;
+int score1 = 0;
+int score2 = 0;
+int scoreold1 = 0;
+int scoreold2 = 0;
 
 
 Racket rackets[2];
+
+void showScores();
  
 int main(int argc, char *argv[]) {
   
@@ -59,7 +63,8 @@ int main(int argc, char *argv[]) {
   drawBackground(0x0000);
   
   if (mode == 2) {
-    while (roundCount != 4) {
+    while (score1 != 5 && score2 != 5) {
+      drawBackground(0x0000);
       initRacket(&rackets[0], 1);
       initRacket(&rackets[1], 2);
       drawRacket(&rackets[0], 0xffff);
@@ -76,7 +81,7 @@ int main(int argc, char *argv[]) {
       uint8_t kb = kd.blueKnob;
 
       renderLCD();
-      while (moveBall(&new_ball, rackets)) {
+      while (moveBall(&new_ball, rackets, &score1, &score2)) {
         
         drawBall(&new_ball, 0xe9dd);
 
@@ -111,7 +116,13 @@ int main(int argc, char *argv[]) {
 
         
       }
+      showScores();
       roundCount++;
+      if (score1 > scoreold1) {
+        scoreold1++;
+      } else {
+        scoreold2++;
+      }
     }
   }
   else {
@@ -132,6 +143,8 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
-// void showScores() {
-
-// }
+void showScores() {
+  drawScores(score1, score2);
+  int winner = score1 >scoreold1 ? 1: 2;
+  ledWin(winner);
+}

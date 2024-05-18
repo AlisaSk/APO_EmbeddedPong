@@ -1,6 +1,8 @@
 #ifndef RACKET_H
 #define RACKET_H
 
+#include <stdbool.h>
+
 typedef struct Racket {
   int x,y;
   int w,h;
@@ -8,6 +10,6 @@ typedef struct Racket {
 } Racket;
  
 void initRacket(Racket* racket, int number);
-void moveRacket (Racket* racket, int number);
+bool moveRacket (Racket* racket, int number);
 
 #endif

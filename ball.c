@@ -17,7 +17,7 @@ void initBall(Ball* ball) {
    
 }
 
-bool moveBall(Ball* ball, Racket* rackets) {
+bool moveBall(Ball* ball, Racket* rackets, int *score1, int *score2) {
     drawBall(ball, 0x0000);
     int new_x = ball->x + ball->dx;
     int new_y = ball->y + ball->dy;
@@ -32,7 +32,11 @@ bool moveBall(Ball* ball, Racket* rackets) {
         new_x = ball->x + ball->dx;
     }
 
-    if (new_x <= 0 + ball->w || new_x >= WIDTH - ball->w) {
+    if (new_x <= 0 + ball->w) {
+      (*score1)++;
+      return false;
+    } else if (new_x >= WIDTH - ball->w){
+      (*score2)++;
       return false;
     }
 
@@ -46,17 +50,6 @@ bool moveBall(Ball* ball, Racket* rackets) {
     return true;
 }
 
-// void drawBall (Ball* ball, unsigned short color) {
-//   int x = ball->x;
-//   int y = ball->y;
-//   int w = ball->w;
-//   int h = ball->h;
-//   for (int x1 = x; x1 < w + x; x1 ++) {
-//     for (int y1 = y; y1 < y + h; y1++) {
-//       draw_pixel_ball(x1, y1, color);
-//     }
-//   }
-// }
 
 bool checkCollisionX( Racket* rocket, Ball* ball, int rocketNumber) {
     // Calculate the sides of the rectangle
