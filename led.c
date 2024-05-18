@@ -34,19 +34,36 @@ void colorLedRGB (unsigned short color1, unsigned short color2) {
     *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_RGB2_o) = color2;
 }
 
-void ledLineLightUp() {
+void ledWin(int winnerNum) {
     uint32_t val_line = 5;
-    struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
+    struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 40 * 1000 * 1000};
     for (int i=0; i<30; i++) {
+        switch(winnerNum) {
+            case 1:
+                colorLedRGB(0x00FF00, 0);
+                break;
+            default:
+                colorLedRGB(0, 0x00FF);
+                break;
+        }
         *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_LINE_o) = val_line;
         val_line<<=1;
         clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
+        ledRGBClean();
     }
-    struct timespec loop_delay2 = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
     for (int i=0; i<30; i++) {
+        switch(winnerNum) {
+            case 1:
+                colorLedRGB(0x00FF00, 0);
+                break;
+            default:
+                colorLedRGB(0, 0x00FF);
+                break;
+        }
         *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_LINE_o) = val_line;
         val_line>>=1;
-        clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay2, NULL);
+        clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
+        ledRGBClean();
     }
     ledLineClean();
     ledRGBClean();

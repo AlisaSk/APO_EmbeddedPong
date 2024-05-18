@@ -1,24 +1,45 @@
 #include "ball.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
+#include <time.h>
 
 #define WIDTH 480
 #define HEIGHT 320
 
-extern unsigned short *fb;
-void draw_pixel_ball(int x, int y, unsigned short color) {
-  if (x>=0 && x<480 && y>=0 && y<320) {
-    fb[x+480*y] = color;
-  }
-}
+extern int score1;
+extern int score2;
 
-void initBall(Ball* ball) {
-    ball->w = 20;
-    ball->h = 20;
-    ball->x = WIDTH / 2;
-    ball->y = HEIGHT / 2;
-    ball->dx = 5;
-    ball->dy = 5;
+void initBall(Ball* ball, int botSpeed) {
+  ball->w = 20;
+  ball->h = 20;
+  ball->x = WIDTH / 2;
+  ball->y = HEIGHT / 2;
+   
+  if (botSpeed == 0) {
+     /* Intializes random number generator for multiplayer*/
+    time_t t;
+    srand((unsigned) time(&t));
+    int minSpeed = 4;
+    ball->dx = rand() % 2 + minSpeed;
+    ball->dy = rand() % 2 + minSpeed;
+   } else {
+    switch(botSpeed) {
+      case 3:
+        ball->dx = -8;
+        ball->dy = 8;
+        break;
+      case 2:
+        ball->dx = 6;
+        ball->dy = -6;
+        break;
+      default:
+        ball->dx = -4;
+        ball->dy = 4;
+        break;
+    }
+   }
+   
+   
    
 }
 
@@ -27,7 +48,6 @@ bool moveBall(Ball* ball, Racket* rackets) {
     int new_x = ball->x + ball->dx;
     int new_y = ball->y + ball->dy;
     
-    // bool isValidX = new_x >= 0 && new_x < WIDTH - ball->w;
     bool isValidX = !checkCollisionX(&rackets[0], ball, 1) && !checkCollisionX(&rackets[1], ball, 2);
     bool isValidY = (new_y >= 0 && new_y < HEIGHT - ball->h) && !checkCollisionY(&rackets[0], ball, 1) && !checkCollisionY(&rackets[1], ball, 2);
 
@@ -37,7 +57,11 @@ bool moveBall(Ball* ball, Racket* rackets) {
         new_x = ball->x + ball->dx;
     }
 
-    if (new_x <= 0 + ball->w || new_x >= WIDTH - ball->w) {
+    if (new_x <= 0 + ball->w + 25) {
+      score2++;
+      return false;
+    } else if (new_x >= WIDTH - ball->w - 25){
+      score1++;
       return false;
     }
 
@@ -51,17 +75,6 @@ bool moveBall(Ball* ball, Racket* rackets) {
     return true;
 }
 
-void drawBall (Ball* ball, unsigned short color) {
-  int x = ball->x;
-  int y = ball->y;
-  int w = ball->w;
-  int h = ball->h;
-  for (int x1 = x; x1 < w + x; x1 ++) {
-    for (int y1 = y; y1 < y + h; y1++) {
-      draw_pixel_ball(x1, y1, color);
-    }
-  }
-}
 
 bool checkCollisionX( Racket* rocket, Ball* ball, int rocketNumber) {
     // Calculate the sides of the rectangle

@@ -1,32 +1,31 @@
-#include "menu.h"
+#include "botmenu.h"
 #include "font_types.h"
 #include "knobs.h"
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "painter.h"
+
 #include <time.h>
 #include <string.h>
-#include "botmenu.h"
-#include "pong.h"
 
 
-
-void startMenu() {
-  printf("Player menu\n");
-  int gameMode = 1;
-  drawBackground(0x0000);
-
+void startBotMenu() {
+  printf("Bot menu\n");
+  int difficulty = 1;
   unsigned short textColor = 0xfe80;
-  draw_word(140, 30, "MENU", 50, 0x90f6, 4);
-  draw_word(115, 120, "1 pLayer", 30, textColor, 4);
-  draw_word(115, 200, "2 pLayers", 30, textColor, 4);
-  highlightCurrentChoice(110, 110, 250, 85, 0x07df, textColor);
+  drawBackground(0x0000);
+  draw_word(17, 30, "CHOOSE GAME MODE", 29, 0x007f, 3);
+  draw_word(170, 100, "EASY", 29, textColor, 3);
+  draw_word(170, 170, "NORMAL", 29, textColor, 3);
+  draw_word(170, 250, "HARD", 29, textColor, 3);
+  highlightCurrentChoice(165, 90, 130, 65, 0x07df, textColor);
   renderLCD();
   unsigned int ms_count = 0;
   clock_t start_time = clock();
   while (ms_count < 200) {
     ms_count = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
   }
+  
 
   initKnobs();
   KnobsData kd = getKnobsValue();
@@ -36,7 +35,6 @@ void startMenu() {
   uint8_t bg = kd.greenButton;
   uint8_t br = kd.redButton;
   uint8_t bb = kd.blueButton;
-
 
   while (!bg && !br && !bb) {
     
@@ -48,17 +46,24 @@ void startMenu() {
 
 
     if (krn != kr || kbn != kb || kgn != kg) {
-      gameMode = gameMode == 1 ? 2 : 1;
+      difficulty = difficulty == 3 ? 1 : difficulty + 1;
       
     }
     
-    if (gameMode == 1) {
-      highlightCurrentChoice(110, 110, 250, 85, 0x07df, textColor);
-      highlightCurrentChoice(110, 190, 280, 85, 0x0000, textColor);
+    if (difficulty == 1) {
+      highlightCurrentChoice(165, 90, 130, 65, 0x07df, textColor);
+      highlightCurrentChoice(165, 160, 210, 65, 0x0000, textColor);
+      highlightCurrentChoice(165, 240, 140, 65, 0x0000, textColor);
     }
-    else if (gameMode == 2) {
-      highlightCurrentChoice(110, 110, 250, 85, 0x0000, textColor);
-      highlightCurrentChoice(110, 190, 280, 85, 0x07df, textColor);
+    else if (difficulty == 2) {
+      highlightCurrentChoice(165, 90, 130, 65, 0x0000, textColor);
+      highlightCurrentChoice(165, 160, 210, 65, 0x07df, textColor);
+      highlightCurrentChoice(165, 240, 140, 65, 0x0000, textColor);
+    }
+    else if (difficulty == 3) {
+      highlightCurrentChoice(165, 90, 130, 65, 0x0000, textColor);
+      highlightCurrentChoice(165, 160, 210, 65, 0x0000, textColor);
+      highlightCurrentChoice(165, 240, 140, 65, 0x07df, textColor);
     }
    
     renderLCD();
@@ -81,12 +86,10 @@ void startMenu() {
     }
 
   }
-  printf("Goodbye player menu!\n");
-  if (gameMode == 1) {
-    startBotMenu();
-  }
-  else {
-    playMultiplayer();
-  }
-} 
+
+  printf("Goodbye bot menu!\n");
+  playGameBot(difficulty);
+}
+
+
 
