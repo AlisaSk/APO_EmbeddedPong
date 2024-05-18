@@ -81,7 +81,7 @@ void ledStartPage(int milisec) {
         ledRGBClean();
     }
     for (int i=0; i<30; i++) {
-        colorLedRGB (0x00FF, 0x00FF00);
+        colorLedRGB (0x00FF, 0xf81d);
         *(volatile uint32_t*)(ledMemBase + SPILED_REG_LED_LINE_o) = val_line;
         val_line>>=1;
         clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
