@@ -11,7 +11,7 @@
 #include <unistd.h>
  
 #include "mzapo_parlcd.h"
-#include "mzapo_phys.h"
+#include "mzapo//mzapo_phys.h"
 #include "mzapo_regs.h"
 #include "led.h"
 #include "knobs.h"

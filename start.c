@@ -7,6 +7,7 @@
 #define WIDTH 480
 #define HEIGHT 320
 
+/* This file contains all of the functions to animate start page*/
 
 void startPage( ) {
     int ptr;
@@ -18,7 +19,10 @@ void startPage( ) {
 
     drawBackground(0x0000);
 
-    initKnobs();
+    if (!initKnobs()) {
+        fprintf(stderr, "ERROR_KNOBS!\n");
+        exit(-1);
+    };
     KnobsData kd = getKnobsValue();
     uint8_t rb = kd.redButton;
     uint8_t gb = kd.greenButton;

@@ -22,8 +22,8 @@ extern Racket rackets[2];
 void playGameBot(int botMode) {
     int botSpeed = botMode * 5;
     drawBackground(0x0000);
-    Ball new_ball;
-    initBall(&new_ball, botMode);
+    Ball newBall;
+    initBall(&newBall, botMode);
   
     while (score1 != 5 && score2 != 5) {
         drawBackground(0x0000);
@@ -32,17 +32,17 @@ void playGameBot(int botMode) {
         drawRacket(&rackets[0], 0xffff);
         drawRacket(&rackets[1], 0xffff);
 
-        initBall(&new_ball, botMode);
+        initBall(&newBall, botMode);
         
-        drawBall(&new_ball, 0xe9dd);
+        drawBall(&newBall, 0xe9dd);
 
         initKnobs();
         KnobsData kd = getKnobsValue();
         uint8_t kr = kd.redKnob;
         renderLCD();
-        while (moveBall(&new_ball, rackets)) {
+        while (moveBall(&newBall, rackets)) {
         
-            drawBall(&new_ball, 0xe9dd);
+            drawBall(&newBall, 0xe9dd);
             drawRacket(&rackets[0], 0xffff);
 
             KnobsData nkd = getKnobsValue();
@@ -71,9 +71,8 @@ void playGameBot(int botMode) {
             renderLCD();
         
         
-        }
+        }      
       showScores();
-      
       if (score1 > scoreold1) {
         scoreold1++;
       } else {
@@ -85,8 +84,8 @@ void playGameBot(int botMode) {
 }
 
 void playMultiplayer() {
-    Ball new_ball;
-    initBall(&new_ball, 0);
+    Ball newBall;
+    initBall(&newBall, 0);
     while (score1 != 5 && score2 != 5) {
       drawBackground(0x0000);
       initRacket(&rackets[0], 1);
@@ -94,11 +93,11 @@ void playMultiplayer() {
       drawRacket(&rackets[0], 0xffff);
       drawRacket(&rackets[1], 0xffff);
 
-      new_ball.x = WIDTH / 2;
-      new_ball.y = HEIGHT / 2;
+      newBall.x = WIDTH / 2;
+      newBall.y = HEIGHT / 2;
 
       
-      drawBall(&new_ball, 0xe9dd);
+      drawBall(&newBall, 0xe9dd);
 
       initKnobs();
       KnobsData kd = getKnobsValue();
@@ -107,9 +106,9 @@ void playMultiplayer() {
       uint8_t kb = kd.blueKnob;
 
       renderLCD();
-      while (moveBall(&new_ball, rackets)) {
+      while (moveBall(&newBall, rackets)) {
         
-        drawBall(&new_ball, 0xe9dd);
+        drawBall(&newBall, 0xe9dd);
 
 
         KnobsData nkd = getKnobsValue();
@@ -155,6 +154,6 @@ void playMultiplayer() {
 
 void showScores() {
   drawScores(score1, score2);
-  int winner = score1 >scoreold1 ? 1: 2;
+  int winner = score1 > scoreold1 ? 1: 2;
   ledWin(winner);
 }

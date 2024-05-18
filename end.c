@@ -8,6 +8,10 @@
 
 extern int score1;
 extern int score2;
+extern int scoreold1;
+extern int scoreold2;
+
+/* This file contains all of the functions to display end page and total score*/
 
 void showEnd() {
     printf("End\n");
@@ -18,6 +22,7 @@ void showEnd() {
     sprintf(endMessage, "PLAYER %d W IN", winner);
     sprintf(scores, "%d:%d", score1, score2);
 
+    // adding end page texts
     draw_word(160, 30, "END", 40, 0x90f6, 4);
     draw_word(160, 100, scores, 45, 0x5fa3, 4);
     draw_word(40, 170, endMessage, 30, 0x90f6, 3);
@@ -32,6 +37,7 @@ void showEnd() {
     int switcher = -1;
     int counterLeds = 0;
 
+    // waiting for the button pressed
     while (!rb && !gb && !bb) {
         switch (switcher) {
             case -1:
@@ -50,10 +56,10 @@ void showEnd() {
         gb = kd.greenButton;
         bb = kd.blueButton;
 
-        unsigned int ms_count = 0;
-        clock_t start_time = clock();
-        while (ms_count < 190) {
-            ms_count = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
+        unsigned int msCount = 0;
+        clock_t startTime = clock();
+        while (msCount < 190) {
+            msCount = (clock() - startTime) * 1000 / CLOCKS_PER_SEC;
         }
 
         if (counterLeds == 10) {
@@ -66,5 +72,7 @@ void showEnd() {
     printf("Restart\n");
     score1 = 0;
     score2 = 0;
+    scoreold1 = 0;
+    scoreold2 = 0;
     startMenu();
 }

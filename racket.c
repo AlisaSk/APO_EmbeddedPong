@@ -6,7 +6,7 @@
 #define WIDTH 480
 #define HEIGHT 320
 
-
+/* This file contains all of the functions for rackets*/
 
 void initRacket(Racket* racket, int number) {
     racket->x = number == 1 ? 50 : WIDTH - 50;
@@ -25,5 +25,3 @@ bool moveRacket (Racket* racket, int number) {
   }
   return false;
 }
-
-

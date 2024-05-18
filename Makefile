@@ -1,7 +1,9 @@
 CC = arm-linux-gnueabihf-gcc
 CXX = arm-linux-gnueabihf-g++
+SRC_PATH = mzapo
 
-CPPFLAGS = -I .
+CPPFLAGS = -I . -I $(SRC_PATH)
+
 CFLAGS =-g -std=gnu99 -O1 -Wall
 CXXFLAGS = -g -std=gnu++11 -O1 -Wall
 #LDFLAGS +=
@@ -9,8 +11,9 @@ LDFLAGS += -static
 LDLIBS += -lrt -lpthread
 #LDLIBS += -lm
 
-SOURCES = main.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c led.c ball.c racket.c knobs.c menu.c start.c painter.c
-SOURCES += font_prop14x16.c font_rom8x16.c botmenu.c pong.c end.c
+SOURCES = main.c $(SRC_PATH)/mzapo_phys.c $(SRC_PATH)/mzapo_parlcd.c $(SRC_PATH)/serialize_lock.c
+SOURCES += $(SRC_PATH)/font_prop14x16.c $(SRC_PATH)/font_rom8x16.c
+SOURCES += botmenu.c pong.c end.c led.c ball.c racket.c knobs.c menu.c start.c painter.c
 TARGET_EXE = main
 TARGET_IP ?= 192.168.223.211
 ifeq ($(TARGET_IP),)
