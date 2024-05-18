@@ -10,7 +10,7 @@
 
 
 int startMenu() {
-  
+  printf("Player menu\n");
   int gameMode = 1;
   drawBackground(0x0000);
 
@@ -72,7 +72,7 @@ int startMenu() {
     }
 
   }
-  printf("Goodbye menu!\n");
+  printf("Goodbye player menu!\n");
   return gameMode;
 } 
 

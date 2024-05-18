@@ -10,7 +10,7 @@
 void startPage( ) {
     int ptr;
 
-    printf("Hello world\n");
+    printf("Start\n");
 
     sleep(1);
 

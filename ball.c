@@ -32,7 +32,7 @@ bool moveBall(Ball* ball, Racket* rackets) {
         new_x = ball->x + ball->dx;
     }
 
-    if (new_x <= 0 + ball->w || new_x >= WIDTH - ball->w) {
+    if (new_x <= 0 + ball->w + 35|| new_x >= WIDTH - ball->w - 35) {
       return false;
     }
 

@@ -10,6 +10,7 @@
 
 
 int startBotMenu() {
+  printf("Bot menu\n");
   int difficulty = 1;
   unsigned short textColor = 0xfe80;
   drawBackground(0x0000);

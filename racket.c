@@ -16,17 +16,6 @@ void initRacket(Racket* racket, int number) {
     racket->color = 0xffff;
 }
 
-// void drawRacket(Racket* racket, unsigned short color) {
-//   int x = racket->x;
-//   int y = racket->y;
-//   int w = racket->w;
-//   int h = racket->h;
-//   for (int x1 = x; x1 < w + x; x1 ++) {
-//     for (int y1 = y; y1 < y + h; y1++) {
-//       draw_pixel(x1, y1, color);
-//     }
-//   }
-// }
 
 bool moveRacket (Racket* racket, int number) {
   int y1 = racket->y + number;
