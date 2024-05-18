@@ -2,13 +2,9 @@
 #include "racket.h"
 #include "led.h"
 #include "knobs.h"
-#include <stdlib.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <time.h>
-#include <unistd.h>
 #include "end.h"
+#include "painter.h"
+#include "headers.h"
 
 extern int score1;
 extern int score2;

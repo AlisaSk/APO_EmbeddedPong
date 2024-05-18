@@ -2,7 +2,7 @@
 #include "painter.h"
 #include "knobs.h"
 #include "menu.h"
-#include <stdio.h>
+#include "headers.h"
 
 extern int score1;
 extern int score2;

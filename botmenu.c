@@ -4,9 +4,7 @@
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "painter.h"
-
-#include <time.h>
-#include <string.h>
+#include "headers.h"
 
 
 void startBotMenu() {

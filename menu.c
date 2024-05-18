@@ -4,10 +4,9 @@
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "painter.h"
-#include <time.h>
-#include <string.h>
 #include "botmenu.h"
 #include "pong.h"
+#include "headers.h"
 
 
 

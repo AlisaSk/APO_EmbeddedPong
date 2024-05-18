@@ -1,7 +1,7 @@
 #include "ball.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
-#include <time.h>
+#include "headers.h"
 
 #define WIDTH 480
 #define HEIGHT 320
