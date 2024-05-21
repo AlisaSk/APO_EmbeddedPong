@@ -3,10 +3,9 @@
 #include "led.h"
 #include "painter.h"
 #include "menu.h"
+#include "headers.h"
 
-#define WIDTH 480
-#define HEIGHT 320
-
+/* This file contains all of the functions to animate start page*/
 
 void startPage( ) {
     int ptr;
@@ -18,22 +17,25 @@ void startPage( ) {
 
     drawBackground(0x0000);
 
-    initKnobs();
+    if (!initKnobs()) {
+        fprintf(stderr, "ERROR_KNOBS!\n");
+        exit(-1);
+    };
     KnobsData kd = getKnobsValue();
     uint8_t rb = kd.redButton;
     uint8_t gb = kd.greenButton;
     uint8_t bb = kd.blueButton;
 
-    unsigned short color1 = 0xb15f;
-    unsigned short color2 = 0x0000;
+    unsigned short color1 = PURPLE;
+    unsigned short color2 = BLACK;
     drawRectangle(color1, color2);
     kd = getKnobsValue();
     rb = kd.redButton;
     gb = kd.greenButton;
     bb = kd.blueButton;
 
-    draw_word(125, 65, "START", 50, 0xffff, 4);
-    draw_word(145, 130, "PONG", 50, 0xffff, 4);
+    draw_word(125, 65, "START", 50, WHITE, 4);
+    draw_word(145, 130, "PONG", 50, WHITE, 4);
     renderLCD();
     ledStartPage(15);
 
@@ -43,10 +45,10 @@ void startPage( ) {
         drawRectangle(color1, color2);
         switch (switcher) {
             case -1:
-                draw_word(20, 265, "PRESS ANY BUTTON TO START", 18, 0xffff, 2);
+                draw_word(20, 265, "PRESS ANY BUTTON TO START", 18, WHITE, 2);
                 break;
             default:
-                draw_word(20, 265, "PRESS ANY BUTTON TO START", 18, 0x0000, 2);
+                draw_word(20, 265, "PRESS ANY BUTTON TO START", 18, BLACK, 2);
                 break;
         }
         switcher *= -1;

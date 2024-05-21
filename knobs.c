@@ -1,31 +1,23 @@
 #include "mzapo_regs.h"
 
 #include "knobs.h"
- 
-static KnobsData *lastKnobsData;
 
+/* This file contains all of the functions to init and get knobs/buttons values*/
 
 bool initKnobs() {
-    mem_base = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
-    if (mem_base == NULL) {
+    memBase = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
+    if (memBase == NULL) {
         fprintf(stderr, "ERROR_KNOBS: Memory allocation failed\n");
         return false;
     }
 
     KnobsData initialKnobsData = getKnobsValue();
-
-    lastKnobsData = malloc(sizeof(KnobsData));  // Allocate memory for storing the previous knob data
-    if (lastKnobsData == NULL) {
-        fprintf(stderr, "ERROR_KNOBS: Memory allocation failed\n");
-        return false;
-    }
-    *lastKnobsData = initialKnobsData; 
     
     return true;
 }
 
 KnobsData getKnobsValue() {
-    int32_t rgbKnobsValue = *(volatile uint32_t *)(mem_base + SPILED_REG_KNOBS_8BIT_o);
+    int32_t rgbKnobsValue = *(volatile uint32_t *)(memBase + SPILED_REG_KNOBS_8BIT_o);
 
     KnobsData ret = {
         .redKnob = (rgbKnobsValue >> 16) & 0xFF,  

@@ -1,13 +1,14 @@
 #include "ball.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
-#include <time.h>
+#include "headers.h"
 
-#define WIDTH 480
-#define HEIGHT 320
+
 
 extern int score1;
 extern int score2;
+
+/* This file contains all of the functions to move ball*/
 
 void initBall(Ball* ball, int botSpeed) {
   ball->w = 20;
@@ -16,20 +17,21 @@ void initBall(Ball* ball, int botSpeed) {
   ball->y = HEIGHT / 2;
    
   if (botSpeed == 0) {
-     /* Intializes random number generator for multiplayer*/
+     // Intializes random number generator for multiplayer
     time_t t;
     srand((unsigned) time(&t));
     int minSpeed = 4;
     ball->dx = rand() % 2 + minSpeed;
     ball->dy = rand() % 2 + minSpeed;
    } else {
+     // Initialize speed according to difficulty
     switch(botSpeed) {
       case 3:
         ball->dx = -8;
         ball->dy = 8;
         break;
       case 2:
-        ball->dx = 6;
+        ball->dx = -6;
         ball->dy = -6;
         break;
       default:
@@ -39,39 +41,37 @@ void initBall(Ball* ball, int botSpeed) {
     }
    }
    
-   
-   
 }
 
 bool moveBall(Ball* ball, Racket* rackets) {
     drawBall(ball, 0x0000);
-    int new_x = ball->x + ball->dx;
-    int new_y = ball->y + ball->dy;
+    int newX = ball->x + ball->dx;
+    int newY = ball->y + ball->dy;
     
     bool isValidX = !checkCollisionX(&rackets[0], ball, 1) && !checkCollisionX(&rackets[1], ball, 2);
-    bool isValidY = (new_y >= 0 && new_y < HEIGHT - ball->h) && !checkCollisionY(&rackets[0], ball, 1) && !checkCollisionY(&rackets[1], ball, 2);
+    bool isValidY = (newY >= 0 && newY < HEIGHT - ball->h) && !checkCollisionY(&rackets[0], ball, 1) && !checkCollisionY(&rackets[1], ball, 2);
 
-
+    // check the borders
     if (!isValidX) {
         ball->dx *= -1;
-        new_x = ball->x + ball->dx;
+        newX = ball->x + ball->dx;
     }
 
-    if (new_x <= 0 + ball->w + 25) {
+    if (newX <= 0 + ball->w + 25) {
       score2++;
       return false;
-    } else if (new_x >= WIDTH - ball->w - 25){
+    } else if (newX >= WIDTH - ball->w - 25){
       score1++;
       return false;
     }
 
     if (!isValidY) {
         ball->dy *= -1;
-        new_y = ball->y + ball->dy;
+        newY = ball->y + ball->dy;
     }
 
-    ball->x = new_x;
-    ball->y = new_y;
+    ball->x = newX;
+    ball->y = newY;
     return true;
 }
 
